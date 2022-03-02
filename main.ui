@@ -194,7 +194,7 @@
      <property name="title">
       <string>功能区</string>
      </property>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="Btn_autotest">
       <property name="geometry">
        <rect>
         <x>10</x>
