@@ -1,19 +1,36 @@
-import requests
+from urllib import parse
+
+from test_util import request
 
 
-def web_add_contacts():
-    auth = ('admin', 'admin')
-    url = 'http://10.20.0.31/hl_web/contact_post'
-    xmlfile = 'G:\\HTTP\\phonebook\\phonebook13.xml'
+def web_add_contacts(device, xmlfile_abs_path):
+    url = 'http://%s/hl_web/contact_post' % device.ip
     try:
         header = {
             "Content-Type": "application/octet-stream"
         }
-        data = bytes('phonebook_update:', encoding='utf-8') + b'\xef\xbb\xbf' + open(xmlfile, 'rb').read()
+        data = bytes('phonebook_update:', encoding='utf-8') + b'\xef\xbb\xbf' + open(xmlfile_abs_path, 'rb').read()
+        req = request('POST', url, auth=(device.user, device.password), data=data, headers=header)
+        if req.status_code == 200:
+            return True
+        else:
+            return False
+    except Exception as err:
+        print('err:' + str(err))
+        return False
 
-        print(data)
-        req = requests.post( url, auth=auth, data=data, headers=header)
+
+def set_pnum(device, pnum: str, value):
+    url = "http://%s/save_managerment.htm" % device.ip
+    headers = {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+    auth = (device.user, device.password)
+    try:
+        data = parse.urlencode({pnum: value}).encode(encoding="utf-8")
+
+        req = request('POST', url, headers=headers, data=data, auth=auth)
         if req.status_code == 200:
             return True
     except Exception as err:
-        print('err:' + str(err))
+        print("postFormToDevice err:", err)
+        return False
+    return True
