@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>214</width>
-    <height>702</height>
+    <height>825</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>6</x>
       <y>9</y>
       <width>201</width>
-      <height>641</height>
+      <height>731</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -121,7 +121,7 @@
         <x>10</x>
         <y>150</y>
         <width>171</width>
-        <height>121</height>
+        <height>141</height>
        </rect>
       </property>
       <property name="title">
@@ -179,12 +179,64 @@
         <string>恢复出厂</string>
        </property>
       </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>待开发</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>待开发</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>80</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>待开发</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>110</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>待开发</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>280</y>
+        <y>300</y>
         <width>171</width>
         <height>161</height>
        </rect>
@@ -259,9 +311,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>450</y>
+        <y>580</y>
         <width>171</width>
-        <height>171</height>
+        <height>131</height>
        </rect>
       </property>
       <property name="title">
@@ -283,6 +335,58 @@
       <widget class="QCheckBox" name="D1_check_3cx1">
        <property name="geometry">
         <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>3cx 1501</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="D1_check_3cx2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>3cx 1502</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="D1_check_3cx3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>3cx 1503</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="D1_check_fre1">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>40</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>fre 1501</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="D1_check_fre0">
+       <property name="geometry">
+        <rect>
          <x>90</x>
          <y>20</y>
          <width>71</width>
@@ -290,7 +394,131 @@
         </rect>
        </property>
        <property name="text">
-        <string>3cx 1501</string>
+        <string>fre 1500</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="D1_check_fre3">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>80</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>fre 1503</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="D1_check_fre2">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>60</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>fre 1502</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D1_btn_register">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>151</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>注册</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_9">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>470</y>
+        <width>171</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>P值配置</string>
+      </property>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>54</width>
+         <height>12</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>P值(int)</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>20</y>
+         <width>54</width>
+         <height>12</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>value</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="D1_text_pnum">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>61</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="D1_text_pvalue">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>40</y>
+         <width>81</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D1_btn_pselect">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>61</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>查询</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D1_btn_pset">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>70</y>
+         <width>81</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>设置P值</string>
        </property>
       </widget>
      </widget>

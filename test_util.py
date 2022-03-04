@@ -1,4 +1,5 @@
 import requests
+import xml.etree.ElementTree as ET
 
 
 def request(method, url, **kwargs):
@@ -49,3 +50,17 @@ def isOnline(ip, user, password):
             return 0
     except Exception:
         return 2
+
+def parsePhoneStatusXml(xml):
+    retXmlInfo = dict()
+    root = ET.fromstring(xml)
+    for testInfo in root.findall('info'):
+        name = testInfo.get('name')
+        if not name:
+            raise Exception("no name in testInfo")
+        value = testInfo.get('value')
+        if not value:
+            value = ''
+            # raise Exception("no value in testInfo")
+        retXmlInfo[name] = value
+    return retXmlInfo
