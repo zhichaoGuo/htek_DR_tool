@@ -56,7 +56,7 @@ def skip_rom_check(device):
     url = "http://%s/skip_rom_check" % device.ip
     auth = (device.user, device.password)
     try:
-        req = request('POST', url, auth=auth)
+        req = request('GET', url, auth=auth)
         if req.status_code == 200:
             return True
     except Exception as err:

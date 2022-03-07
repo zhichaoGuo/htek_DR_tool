@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>214</width>
-    <height>825</height>
+    <height>856</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>6</x>
       <y>9</y>
       <width>201</width>
-      <height>731</height>
+      <height>751</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -35,7 +35,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>171</width>
+        <width>181</width>
         <height>131</height>
        </rect>
       </property>
@@ -47,7 +47,7 @@
         <rect>
          <x>62</x>
          <y>20</y>
-         <width>101</width>
+         <width>111</width>
          <height>20</height>
         </rect>
        </property>
@@ -70,7 +70,7 @@
         <rect>
          <x>10</x>
          <y>80</y>
-         <width>151</width>
+         <width>161</width>
          <height>23</height>
         </rect>
        </property>
@@ -109,7 +109,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>151</width>
+         <width>161</width>
          <height>22</height>
         </rect>
        </property>
@@ -120,7 +120,7 @@
        <rect>
         <x>10</x>
         <y>150</y>
-        <width>171</width>
+        <width>181</width>
         <height>141</height>
        </rect>
       </property>
@@ -143,7 +143,7 @@
       <widget class="QPushButton" name="D1_btn_telnet">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>100</x>
          <y>20</y>
          <width>75</width>
          <height>23</height>
@@ -169,7 +169,7 @@
       <widget class="QPushButton" name="D1_btn_factory">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>100</x>
          <y>50</y>
          <width>75</width>
          <height>23</height>
@@ -179,7 +179,7 @@
         <string>恢复出厂</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="D1_btn_logserver">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -189,7 +189,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>待开发</string>
+        <string>log server</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_2">
@@ -208,7 +208,7 @@
       <widget class="QPushButton" name="pushButton_3">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>100</x>
          <y>80</y>
          <width>75</width>
          <height>23</height>
@@ -221,7 +221,7 @@
       <widget class="QPushButton" name="pushButton_4">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>100</x>
          <y>110</y>
          <width>75</width>
          <height>23</height>
@@ -237,8 +237,8 @@
        <rect>
         <x>10</x>
         <y>300</y>
-        <width>171</width>
-        <height>161</height>
+        <width>181</width>
+        <height>111</height>
        </rect>
       </property>
       <property name="title">
@@ -247,9 +247,9 @@
       <widget class="QLineEdit" name="D1_text_fw">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>151</width>
+         <x>60</x>
+         <y>20</y>
+         <width>111</width>
          <height>20</height>
         </rect>
        </property>
@@ -258,8 +258,8 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>120</y>
-         <width>151</width>
+         <y>80</y>
+         <width>161</width>
          <height>23</height>
         </rect>
        </property>
@@ -270,9 +270,9 @@
       <widget class="QLineEdit" name="D1_text_cfg">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>90</y>
-         <width>151</width>
+         <x>60</x>
+         <y>50</y>
+         <width>111</width>
          <height>20</height>
         </rect>
        </property>
@@ -294,7 +294,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>70</y>
+         <y>50</y>
          <width>54</width>
          <height>12</height>
         </rect>
@@ -311,124 +311,20 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>580</y>
-        <width>171</width>
-        <height>131</height>
+        <y>530</y>
+        <width>181</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="title">
        <string>注册信息</string>
       </property>
-      <widget class="QCheckBox" name="D1_check_3cx0">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>3cx 1500</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="D1_check_3cx1">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>3cx 1501</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="D1_check_3cx2">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>60</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>3cx 1502</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="D1_check_3cx3">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>80</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>3cx 1503</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="D1_check_fre1">
-       <property name="geometry">
-        <rect>
-         <x>90</x>
-         <y>40</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>fre 1501</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="D1_check_fre0">
-       <property name="geometry">
-        <rect>
-         <x>90</x>
-         <y>20</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>fre 1500</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="D1_check_fre3">
-       <property name="geometry">
-        <rect>
-         <x>90</x>
-         <y>80</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>fre 1503</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="D1_check_fre2">
-       <property name="geometry">
-        <rect>
-         <x>90</x>
-         <y>60</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>fre 1502</string>
-       </property>
-      </widget>
       <widget class="QPushButton" name="D1_btn_register">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>100</y>
-         <width>151</width>
+         <y>50</y>
+         <width>161</width>
          <height>23</height>
         </rect>
        </property>
@@ -436,13 +332,23 @@
         <string>注册</string>
        </property>
       </widget>
+      <widget class="QComboBox" name="D1_box_register">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>161</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_9">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>470</y>
-        <width>171</width>
+        <y>420</y>
+        <width>181</width>
         <height>101</height>
        </rect>
       </property>
@@ -480,7 +386,7 @@
         <rect>
          <x>10</x>
          <y>40</y>
-         <width>61</width>
+         <width>71</width>
          <height>20</height>
         </rect>
        </property>
@@ -488,7 +394,7 @@
       <widget class="QLineEdit" name="D1_text_pvalue">
        <property name="geometry">
         <rect>
-         <x>80</x>
+         <x>90</x>
          <y>40</y>
          <width>81</width>
          <height>20</height>
@@ -500,7 +406,7 @@
         <rect>
          <x>10</x>
          <y>70</y>
-         <width>61</width>
+         <width>71</width>
          <height>23</height>
         </rect>
        </property>
@@ -511,7 +417,7 @@
       <widget class="QPushButton" name="D1_btn_pset">
        <property name="geometry">
         <rect>
-         <x>80</x>
+         <x>90</x>
          <y>70</y>
          <width>81</width>
          <height>23</height>
@@ -522,157 +428,105 @@
        </property>
       </widget>
      </widget>
+     <widget class="QGroupBox" name="groupBox_10">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>620</y>
+        <width>181</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>保存区</string>
+      </property>
+      <widget class="QPushButton" name="D1_btn_savescreen">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>51</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>截图</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D1_btn_savelog">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>20</y>
+         <width>41</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>log</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D1_btn_savecfg">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>20</y>
+         <width>51</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>配置</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
       <string>设备2</string>
      </attribute>
-     <widget class="QGroupBox" name="groupBox_5">
+     <widget class="QGroupBox" name="groupBox_13">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>280</y>
-        <width>171</width>
-        <height>161</height>
+        <y>530</y>
+        <width>181</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="title">
-       <string>升级</string>
+       <string>注册信息</string>
       </property>
-      <widget class="QLineEdit" name="D2_text_fw">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>151</width>
-         <height>20</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="D2_btn_ap">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>120</y>
-         <width>151</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>AP</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="D2_text_cfg">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>90</y>
-         <width>151</width>
-         <height>20</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_6">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>54</width>
-         <height>12</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>fw路径</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_7">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>70</y>
-         <width>54</width>
-         <height>12</height>
-        </rect>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="text">
-        <string>cfg路径</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="groupBox_6">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>150</y>
-        <width>171</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>功能区</string>
-      </property>
-      <widget class="QPushButton" name="D2_btn_autotest">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>75</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>AutoTest</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="D2_btn_telnet">
-       <property name="geometry">
-        <rect>
-         <x>90</x>
-         <y>20</y>
-         <width>75</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>调试模式</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="D2_btn_reboot">
+      <widget class="QPushButton" name="D2_btn_register">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>75</width>
+         <width>161</width>
          <height>23</height>
         </rect>
        </property>
        <property name="text">
-        <string>重启话机</string>
+        <string>注册</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="D2_btn_factory">
+      <widget class="QComboBox" name="D2_box_register">
        <property name="geometry">
         <rect>
-         <x>90</x>
-         <y>50</y>
-         <width>75</width>
-         <height>23</height>
+         <x>10</x>
+         <y>20</y>
+         <width>161</width>
+         <height>22</height>
         </rect>
-       </property>
-       <property name="text">
-        <string>恢复出厂</string>
        </property>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="groupBox_7">
+     <widget class="QGroupBox" name="groupBox_15">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>171</width>
+        <width>181</width>
         <height>131</height>
        </rect>
       </property>
@@ -684,12 +538,12 @@
         <rect>
          <x>62</x>
          <y>20</y>
-         <width>101</width>
+         <width>111</width>
          <height>20</height>
         </rect>
        </property>
       </widget>
-      <widget class="QLabel" name="label_8">
+      <widget class="QLabel" name="label_12">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -707,7 +561,7 @@
         <rect>
          <x>10</x>
          <y>80</y>
-         <width>151</width>
+         <width>161</width>
          <height>23</height>
         </rect>
        </property>
@@ -715,7 +569,7 @@
         <string>绑定设备</string>
        </property>
       </widget>
-      <widget class="QLabel" name="D2_lab_state">
+      <widget class="QLabel" name="D1_lab_state_3">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -746,52 +600,365 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>151</width>
+         <width>161</width>
          <height>22</height>
         </rect>
        </property>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="groupBox_8">
+     <widget class="QGroupBox" name="groupBox_16">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>450</y>
-        <width>171</width>
-        <height>171</height>
+        <y>150</y>
+        <width>181</width>
+        <height>141</height>
        </rect>
       </property>
       <property name="title">
-       <string>注册信息</string>
+       <string>功能区</string>
       </property>
-      <widget class="QCheckBox" name="D2_check_3cx0">
+      <widget class="QPushButton" name="D2_btn_autotest">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>71</width>
-         <height>16</height>
+         <width>75</width>
+         <height>23</height>
         </rect>
        </property>
        <property name="text">
-        <string>3cx 1500</string>
+        <string>AutoTest</string>
        </property>
       </widget>
-      <widget class="QCheckBox" name="D2_check_3cx1">
+      <widget class="QPushButton" name="D2_btn_telnet">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>20</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>调试模式</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_reboot">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>重启话机</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_factory">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>50</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>恢复出厂</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_logserver">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>log server</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_16">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>待开发</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_17">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>80</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>待开发</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_18">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>110</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>待开发</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_17">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>300</y>
+        <width>181</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>升级</string>
+      </property>
+      <widget class="QLineEdit" name="D2_text_fw">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>20</y>
+         <width>111</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_ap">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>161</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>AP</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="D2_text_cfg">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>50</y>
+         <width>111</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_13">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>54</width>
+         <height>12</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>fw路径</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_14">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>54</width>
+         <height>12</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>cfg路径</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_18">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>420</y>
+        <width>181</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>P值配置</string>
+      </property>
+      <widget class="QLabel" name="label_15">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>54</width>
+         <height>12</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>P值(int)</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_16">
        <property name="geometry">
         <rect>
          <x>90</x>
          <y>20</y>
-         <width>71</width>
-         <height>16</height>
+         <width>54</width>
+         <height>12</height>
         </rect>
        </property>
        <property name="text">
-        <string>3cx 1501</string>
+        <string>value</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="D2_text_pnum">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>71</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="D2_text_pvalue">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>40</y>
+         <width>81</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_pselect">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>71</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>查询</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_pset">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>70</y>
+         <width>81</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>设置P值</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_14">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>620</y>
+        <width>181</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>保存区</string>
+      </property>
+      <widget class="QPushButton" name="D2_btn_savescreen">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>51</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>截图</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_savelog">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>20</y>
+         <width>41</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>log</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_savecfg">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>20</y>
+         <width>51</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>配置</string>
        </property>
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>设备3</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_6">
+     <attribute name="title">
+      <string>设备4</string>
+     </attribute>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>780</y>
+      <width>191</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>message</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
