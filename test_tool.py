@@ -36,6 +36,22 @@ def set_pnum(device, pnum: str, value):
         print("postFormToDevice err:", err)
         return False
 
+def set_pnums(device,dic):
+    url = "http://%s/save_managerment.htm" % device.ip
+    headers = {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+    auth = (device.user, device.password)
+    try:
+        data = parse.urlencode(dic).encode(encoding="utf-8")
+
+        req = request('POST', url, headers=headers, data=data, auth=auth)
+        if req.status_code == 200:
+            return True
+        else:
+            return False
+    except Exception as err:
+        print("postFormToDevice err:", err)
+        return False
+
 
 def query_pnum(device, pnum: str):
     pnum = 'P' + pnum

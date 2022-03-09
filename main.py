@@ -1,13 +1,18 @@
 import sys
+import socket
+from threading import Thread
 
+import yaml
 from PySide2 import QtWidgets, QtCore
-from PySide2.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PySide2.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget
 
 from hl_device import VoipDevice
-from test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check
-from test_util import isIPv4, request, isOnline
+from test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check, set_pnums
+from test_util import isIPv4, request, isOnline, return_ip
 from ui_main import Ui_MainWindow
-from PySide2.QtCore import Slot, QCoreApplication
+from PySide2.QtCore import Slot, QCoreApplication, Signal
+
+from ui_syslog import Ui_SyslogWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -31,6 +36,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.D2_box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])
         self.f_box_change_password(1)
         self.f_box_change_password(2)
+        # 添加注册选框内容
+        # self.D1_box_register.addItems(
+        #     ['3cx 1501', '3cx 1502', '3cx 1503', '3cx 1504',
+        #      'free 1501', 'free 1502', 'free 1503', 'free 1504'])
+        self.D1_box_register.addItems(list(yaml.safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))
         # 绑定选框回调函数
         self.D1_box_password.currentIndexChanged.connect(lambda: self.f_box_change_password(1))
         # 绑定按键回调函数
@@ -39,9 +49,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.D1_btn_telnet.clicked.connect(lambda: self.f_btn_telnet(self.D1))
         self.D1_btn_reboot.clicked.connect(lambda: self.f_btn_reboot(self.D1))
         self.D1_btn_factory.clicked.connect(lambda: self.f_btn_factory(self.D1))
+        self.D1_btn_logserver.clicked.connect(lambda: self.f_btn_show_syslog(self.D1,5129))
         self.D1_btn_ap.clicked.connect(lambda: self.f_btn_ap(self.D1, self.D1_text_fw.text(), self.D1_text_cfg.text()))
         self.D1_btn_pselect.clicked.connect(lambda: self.f_btn_pslect(self.D1, self.D1_text_pnum, self.D1_text_pvalue))
         self.D1_btn_pset.clicked.connect(lambda: self.f_btn_pset(self.D1, self.D1_text_pnum, self.D1_text_pvalue))
+        self.D1_btn_register.clicked.connect(lambda: self.f_btn_register(self.D1, self.D1_box_register))
+
+    def closeEvent(self, event) -> None:
+        sys.exit(0)
 
     def f_box_change_password(self, tag):
         if (tag == 1):
@@ -122,6 +137,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'reset factory失败')
 
+    def f_btn_show_syslog(self, device,port:int):
+
+        set_pnum(device, 'P207', '%s:%s'% (return_ip(),str(port)))
+
+        self.syslogwindow = SyslogWindow(device,port)
+        self.syslogwindow.show()
+
     def f_btn_ap(self, device, str_fw_path, str_cfg_path):
 
         skip_rom_check(device)
@@ -140,10 +162,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QMessageBox.about(self, '提示', 'P值不能为空')
 
         else:
-            ret = set_pnum(device, 'P'+pnum.text(), pvalue.text())
+            ret = set_pnum(device, 'P' + pnum.text(), pvalue.text())
             self.groupBox_9.setTitle('111')
             if not ret:
                 QMessageBox.about(self, '提示', 'P值设置失败')
+
+    def f_btn_register(self, device, register_box):
+        current_account = yaml.safe_load(open('register_date.yml', 'r', encoding='utf-8').read())[
+            register_box.currentText()]
+        sip_server = current_account['sip_server']
+        sip_user = current_account['sip_user']
+        sip_password = current_account['sip_password']
+        set_dic = {'P47': sip_server,  # sip server
+                   'P480': '',  # outbound server
+                   'P130': '0',  # SIP Transport
+                   'P271': '1',  # account active
+                   'P24082': '0',  # Profile 1
+                   'P35': sip_user,  # SIP User ID
+                   'P36': sip_user,  # Authenticate ID
+                   'P34': sip_password}  # Authenticate Password
+        set_pnums(device, set_dic)
 
     def set_all_btn(self, tag, value):
         if (tag in [1, 2, 3]) & (value in [True, False]):
@@ -167,15 +205,66 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             return False
 
+    def show_message(self, message, level=0):
+        if level == 1:
+            self.lab_message.setText(f'<font color=red>{message}</font>')
+        else:
+            self.lab_message.setText(message)
 
-# 按间距中的绿色按钮以运行脚本。
+
+
+
+
+
+class SyslogWindow(QtWidgets.QMainWindow):
+    def __init__(self, device,port: int):
+        self.device = device
+        super(SyslogWindow, self).__init__()
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # 进行socekt配置，使其支持端口复用，否则发送方绑定5066，则无法使用该端口进行接收
+        self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.s.setblocking(True)
+        self.s.bind((return_ip(), port))
+        # 创建线程用于自动回应注册包
+        thread = Thread(target=self.child_thread, args=[self.s,])
+        # 设置成守护线程
+        thread.setDaemon(True)
+        # 启动线程
+        thread.start()
+        self.ui = Ui_SyslogWindow()
+        self.ui.setupUi(self)
+        self.LSignal=LogSignal()
+        self.text = 'syslog'
+        self.LSignal.print_syslog.connect(lambda: self.update_sysylog(self.text))
+
+    def update_sysylog(self,text:str):
+        self.ui.syslog_text.append(text)
+
+    def child_thread(self,s:socket):
+        try:
+            while True:
+                buf, (dut_ip, dut_port) = s.recvfrom(1500)
+                self.text = str(buf)
+                self.LSignal.print_syslog.emit(self.text)
+        except OSError as err :
+            print(err)
+
+    def closeEvent(self, event) -> None:
+        set_pnum(self.device, 'P207', '')
+        self.s.close()
+
+
+
+
+class LogSignal(QtCore.QObject):
+    # 定义信号
+    print_syslog = Signal(str)
+    def __init__(self):
+        super(LogSignal, self).__init__()
+
+
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     gui = MainWindow()
-    # w = QMainWindow()
-    # gui.ui.setupUi(w)
-    # w.show()
     gui.show()
     sys.exit(app.exec_())
-
-# 访问 https://www.jetbrains.com/help/pycharm/ 获取 PyCharm 帮助
