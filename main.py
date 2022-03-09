@@ -193,6 +193,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.D1_btn_ap.setEnabled(value)
                 self.D1_btn_pselect.setEnabled(value)
                 self.D1_btn_pset.setEnabled(value)
+                self.D1_btn_logserver(value)
             elif tag == 2:
                 self.D2_btn_autotest.setEnabled(value)
                 self.D2_btn_telnet.setEnabled(value)
@@ -201,6 +202,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.D2_btn_ap.setEnabled(value)
                 self.D2_btn_pselect.setEnabled(value)
                 self.D2_btn_pset.setEnabled(value)
+                self.D2_btn_logserver(value)
 
         else:
             return False
