@@ -23,3 +23,8 @@
 - 支持保存截图
 - 支持保存syslog
 - 支持保存配置
+
+## 定义
+### MainWindow 主窗口类
+#### MainWindow.D1 页面
+##### MainWindow.D1.ip 设备信息
