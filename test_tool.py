@@ -36,7 +36,8 @@ def set_pnum(device, pnum: str, value):
         print("postFormToDevice err:", err)
         return False
 
-def set_pnums(device,dic):
+
+def set_pnums(device, dic):
     url = "http://%s/save_managerment.htm" % device.ip
     headers = {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
     auth = (device.user, device.password)
@@ -95,6 +96,17 @@ def AutoProvisionNow(device):
         print("AutoProvisionNow err:", err)
         return False
     return True
+
+
+def save_screen(device):
+    url = "http://%s/download_screen" % device.ip
+    auth = (device.user, device.password)
+    try:
+        r = request('GET', url, auth=auth)
+        return r.content
+    except Exception as err:
+        print('can not send request to save_screen :%s' % err)
+        return False
 
 
 if __name__ == '__main__':
