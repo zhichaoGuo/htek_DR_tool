@@ -2,7 +2,7 @@ import requests
 import xml.etree.ElementTree as ET
 
 
-def request(method, url, **kwargs):
+def hl_request(method, url, **kwargs):
     print('send %s request to %s' % (method, url))
     req = requests.request(method, url, **kwargs)
     if req.status_code == 401:
@@ -43,7 +43,7 @@ def isIPv4(ip_str):
 
 def isOnline(ip, user, password):
     try:
-        r = request('GET', 'http://%s/index.htm' % ip, auth=(user, password), timeout=1)
+        r = hl_request('GET', 'http://%s/index.htm' % ip, auth=(user, password), timeout=1)
         if r.status_code == 200:
             return 1
         else:

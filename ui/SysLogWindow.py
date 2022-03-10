@@ -4,9 +4,9 @@ from threading import Thread
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtCore import Signal
 
-from test_tool import set_pnum
-from test_util import return_ip
-from ui_syslog import Ui_SyslogWindow
+from tool.test_tool import set_pnum
+from tool.test_util import return_ip
+from ui.ui_syslog import Ui_SyslogWindow
 
 
 class SyslogWindow(QtWidgets.QMainWindow):

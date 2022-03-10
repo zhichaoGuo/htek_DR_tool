@@ -1,6 +1,6 @@
 from urllib import parse
 
-from test_util import request, parsePhoneStatusXml
+from tool.test_util import hl_request, parsePhoneStatusXml
 
 
 def web_add_contacts(device, xmlfile_abs_path):
@@ -10,7 +10,7 @@ def web_add_contacts(device, xmlfile_abs_path):
             "Content-Type": "application/octet-stream"
         }
         data = bytes('phonebook_update:', encoding='utf-8') + b'\xef\xbb\xbf' + open(xmlfile_abs_path, 'rb').read()
-        req = request('POST', url, auth=(device.user, device.password), data=data, headers=header)
+        req = hl_request('POST', url, auth=(device.user, device.password), data=data, headers=header)
         if req.status_code == 200:
             return True
         else:
@@ -27,7 +27,7 @@ def set_pnum(device, pnum: str, value):
     try:
         data = parse.urlencode({pnum: value}).encode(encoding="utf-8")
 
-        req = request('POST', url, headers=headers, data=data, auth=auth)
+        req = hl_request('POST', url, headers=headers, data=data, auth=auth)
         if req.status_code == 200:
             return True
         else:
@@ -44,7 +44,7 @@ def set_pnums(device, dic):
     try:
         data = parse.urlencode(dic).encode(encoding="utf-8")
 
-        req = request('POST', url, headers=headers, data=data, auth=auth)
+        req = hl_request('POST', url, headers=headers, data=data, auth=auth)
         if req.status_code == 200:
             return True
         else:
@@ -59,7 +59,7 @@ def query_pnum(device, pnum: str):
     url = "http://%s/Abyss/GetPhoneStatus?P=%s" % (device.ip, pnum)
     auth = (device.user, device.password)
     try:
-        req = request('GET', url, auth=auth)
+        req = hl_request('GET', url, auth=auth)
         if req.status_code == 200:
             return parsePhoneStatusXml(req.text)[pnum]
         else:
@@ -73,7 +73,7 @@ def skip_rom_check(device):
     url = "http://%s/skip_rom_check" % device.ip
     auth = (device.user, device.password)
     try:
-        req = request('GET', url, auth=auth)
+        req = hl_request('GET', url, auth=auth)
         if req.status_code == 200:
             return True
     except Exception as err:
@@ -89,7 +89,7 @@ def AutoProvisionNow(device):
     auth = (device.user, device.password)
     try:
         data = parse.urlencode(pValues).encode(encoding="utf-8")
-        req = request('POST', url, headers=headers, data=data, auth=auth)
+        req = hl_request('POST', url, headers=headers, data=data, auth=auth)
         if req.status_code == 200:
             return True
     except Exception as err:
@@ -102,7 +102,7 @@ def save_screen(device):
     url = "http://%s/download_screen" % device.ip
     auth = (device.user, device.password)
     try:
-        r = request('GET', url, auth=auth)
+        r = hl_request('GET', url, auth=auth)
         return r.content
     except Exception as err:
         print('can not send request to save_screen :%s' % err)

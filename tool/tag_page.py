@@ -1,6 +1,6 @@
-import yaml
+from yaml import safe_load
 
-from main import MainWindow
+from ui.MainWindow import MainWindow
 
 
 class Tag:
@@ -32,7 +32,7 @@ class Tag:
             # 注册区
             self.box_register = ui.D1_box_register
             self.box_register.addItems(
-                list(yaml.safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
+                list(safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
             self.btn_register = ui.D1_btn_register
             # 保存区
             self.btn_savescreen = ui.D1_btn_savescreen
@@ -65,7 +65,7 @@ class Tag:
             # 注册区
             self.box_register = ui.D2_box_register
             self.box_register.addItems(
-                list(yaml.safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
+                list(safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
             self.btn_register = ui.D2_btn_register
             # 保存区
             self.btn_savescreen = ui.D2_btn_savescreen
@@ -98,7 +98,7 @@ class Tag:
             # 注册区
             self.box_register = ui.D3_box_register
             self.box_register.addItems(
-                list(yaml.safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
+                list(safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
             self.btn_register = ui.D3_btn_register
             # 保存区
             self.btn_savescreen = ui.D3_btn_savescreen
@@ -131,7 +131,7 @@ class Tag:
             # 注册区
             self.box_register = ui.D4_box_register
             self.box_register.addItems(
-                list(yaml.safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
+                list(safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
             self.btn_register = ui.D4_btn_register
             # 保存区
             self.btn_savescreen = ui.D4_btn_savescreen

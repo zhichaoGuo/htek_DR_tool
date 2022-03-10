@@ -1,5 +1,5 @@
 import re
-from test_util import request
+from tool.test_util import hl_request
 
 
 class VoipDevice:
@@ -8,7 +8,7 @@ class VoipDevice:
         self.ip = in_ip
         self.user = in_user
         self.password = in_password
-        text = request('GET', 'http://%s/index.htm' % in_ip, auth=(in_user, in_password)).text
+        text = hl_request('GET', 'http://%s/index.htm' % in_ip, auth=(in_user, in_password)).text
         self.mac = self._getMac(text)
         self.model = self._getModel(text)
         self.version = self._getVersion(text)
