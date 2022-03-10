@@ -20,11 +20,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             Qt.WindowCloseButtonHint |  # 使能关闭按钮
                             Qt.WindowStaysOnTopHint)  # 窗体总在最前端
         self.setupUi(self)
+        # 分页
         self.D1 = Tag(self, 1)
         self.D2 = Tag(self, 2)
         self.D3 = Tag(self, 3)
         self.D4 = Tag(self, 4)
-        self.set_all_btn(self.D1, False)  # 按键加锁
+        # 按键加锁
+        self.set_all_btn(self.D1, False)
         self.set_all_btn(self.D2, False)
         self.set_all_btn(self.D3, False)
         self.set_all_btn(self.D4, False)
@@ -51,8 +53,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.tabWidget.setTabText(self.tabWidget.indexOf(tag.tab),
                                           QCoreApplication.translate("MainWindow", tag.device.model, None))
                 self.set_all_btn(tag, True)  # 解锁页面btn
+                # 查询并展示指派路径
                 tag.text_fw.setText(query_pnum(tag.device, '192'))
                 tag.text_cfg.setText(query_pnum(tag.device, '237'))
+                # 更新状态，展示提示框
                 tag.lab_online.setText('<font color=green>█在线█</font>')
                 QMessageBox.about(self, '登录提示', tag.device.user + '绑定成功' + tag.device.model)
             # 设备在线但密码错误
@@ -72,12 +76,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QMessageBox.about(self, '登录提示', 'not ipv4')
 
     def f_btn_autotest(self, device):
+        """执行 enable_autotest_api"""
         url = 'http://%s/enable_autotest_api' % device.ip
         r = hl_request('GET', url, auth=(device.user, device.password))
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'enable_autotest失败')
 
     def f_btn_telnet(self, device):
+        """执行 enable telnet 和 enable ftp"""
         self.f_btn_autotest(device)
         url1 = 'http://%s/AutoTest&action=enabletelnet' % device.ip
         r = hl_request('GET', url1, auth=(device.user, device.password))
@@ -89,12 +95,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QMessageBox.about(self, '登录提示', 'enable ftp失败')
 
     def f_btn_reboot(self, device):
+        """重启话机"""
         url = 'http://%s/rb_phone.htm' % device.ip
         r = hl_request('GET', url, auth=(device.user, device.password))
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'reboot失败')
 
     def f_btn_factory(self, device):
+        """恢复出厂"""
         self.f_btn_autotest(device)
         url = 'http://%s/Abyss/FactoryReset' % device.ip
         r = hl_request('GET', url, auth=(device.user, device.password))
@@ -102,12 +110,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QMessageBox.about(self, '登录提示', 'reset factory失败')
 
     def f_btn_show_syslog(self, device, port: int):
+        """打开syslog服务器并展示界面"""
         from ui.SysLogWindow import SyslogWindow
+        # 配置syslog服务器
         set_pnum(device, 'P207', '%s:%s' % (return_ip(), str(port)))
+        # 展示界面
         self.syslogwindow = SyslogWindow(device, port)
         self.syslogwindow.show()
 
     def f_btn_ap(self, tag):
+        """设置fw和cfg地址并执行skip rom check"""
         skip_rom_check(tag.device)
         set_pnum(tag.device, 'P192', tag.text_fw.text())
         set_pnum(tag.device, 'P237', tag.text_cfg.text())
