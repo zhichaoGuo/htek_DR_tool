@@ -27,11 +27,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             QtCore.Qt.WindowStaysOnTopHint)  # 窗体总在最前端
         self.setupUi(self)
         self.D1 = Tag(self, 1)
+        self.D2 = Tag(self, 2)
+        self.D3 = Tag(self, 3)
+        self.D4 = Tag(self, 4)
         self.set_all_btn(self.D1, False)  # 按键加锁
-        # 页面分类
-        # self._set_tag()
+        self.set_all_btn(self.D2, False)
+        self.set_all_btn(self.D3, False)
+        self.set_all_btn(self.D4, False)
         # 绑定按键回调函数
         self._connect_signal(self.D1)
+        self._connect_signal(self.D2)
+        self._connect_signal(self.D3)
+        self._connect_signal(self.D4)
 
     def closeEvent(self, event) -> None:
         sys.exit(0)

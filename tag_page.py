@@ -13,7 +13,6 @@ class Tag:
             self.box_password = ui.D1_box_password
             self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
             self.btn_band = ui.D1_btn_band
-            self.lab_state = ui.D1_lab_state
             self.lab_online = ui.D1_lab_online
             # 功能区
             self.btn_autotest = ui.D1_btn_autotest
@@ -47,8 +46,7 @@ class Tag:
             self.box_password = ui.D2_box_password
             self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
             self.btn_band = ui.D2_btn_band
-            self.lab_state = ui.D2_lab_state
-            self.tab_online = ui.D2_lab_online
+            self.lab_online = ui.D2_lab_online
             # 功能区
             self.btn_autotest = ui.D2_btn_autotest
             self.btn_telnet = ui.D2_btn_telnet
@@ -81,8 +79,7 @@ class Tag:
             self.box_password = ui.D3_box_password
             self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
             self.btn_band = ui.D3_btn_band
-            self.lab_state = ui.D3_lab_state
-            self.tab_online = ui.D3_lab_online
+            self.lab_online = ui.D3_lab_online
             # 功能区
             self.btn_autotest = ui.D3_btn_autotest
             self.btn_telnet = ui.D3_btn_telnet
@@ -115,8 +112,7 @@ class Tag:
             self.box_password = ui.D4_box_password
             self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
             self.btn_band = ui.D4_btn_band
-            self.lab_state = ui.D4_lab_state
-            self.tab_online = ui.D4_lab_online
+            self.lab_online = ui.D4_lab_online
             # 功能区
             self.btn_autotest = ui.D4_btn_autotest
             self.btn_telnet = ui.D4_btn_telnet
