@@ -1,21 +1,16 @@
-import datetime
-import os
+from datetime import datetime
+from os.path import abspath
 import sys
-import socket
-from threading import Thread
 
-import yaml
+from yaml import safe_load
 from PySide2 import QtWidgets, QtCore
-from PySide2.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget, QFileDialog
+from PySide2.QtWidgets import QMainWindow, QMessageBox, QFileDialog
+from PySide2.QtCore import Slot, QCoreApplication
 
 from hl_device import VoipDevice
-
 from test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen
 from test_util import isIPv4, request, isOnline, return_ip
 from ui_main import Ui_MainWindow
-from PySide2.QtCore import Slot, QCoreApplication, Signal
-
-from ui_syslog import Ui_SyslogWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -108,6 +103,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QMessageBox.about(self, '登录提示', 'reset factory失败')
 
     def f_btn_show_syslog(self, device, port: int):
+        from SysLogWindow import SyslogWindow
         set_pnum(device, 'P207', '%s:%s' % (return_ip(), str(port)))
         self.syslogwindow = SyslogWindow(device, port)
         self.syslogwindow.show()
@@ -133,8 +129,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 QMessageBox.about(self, '提示', 'P值设置失败')
 
     def f_btn_register(self, tag):
-        current_account = yaml.safe_load(open('register_date.yml', 'r', encoding='utf-8').read())[
-            tag.box_register.currentText()]
+        current_account = safe_load(open('register_date.yml', 'r', encoding='utf-8').read())[tag.box_register.currentText()]
         sip_server = current_account['sip_server']
         sip_user = current_account['sip_user']
         sip_password = current_account['sip_password']
@@ -150,11 +145,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def f_btn_save_screen(self, tag):
         pic_data = save_screen(tag.device)
-        file_name = '[' + str(datetime.datetime.now())[5:].replace(":", "·").replace("-", "").split(".")[0].replace(" ",
-                                                                                                                    "]")
+        file_name = '[' + str(datetime.now())[5:].replace(":", "·").replace("-", "").split(".")[0].replace(" ", "]")
         file_name = file_name.split(']')[0] + f'][{tag.device.model}]' + file_name.split(']')[1]
-        filePath = QFileDialog.getSaveFileName(self, '保存路径', f'{os.path.abspath(".")}\\screen\\{file_name}.bmp',
-                                               '.bmp(*.bmp)')
+        filePath = QFileDialog.getSaveFileName(self, '保存路径', f'{abspath(".")}\\screen\\{file_name}.bmp', '.bmp(*.bmp)')
         with open(filePath[0], "wb") as f:
             f.write(pic_data)
         f.close()
@@ -198,53 +191,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.lab_message.setText(f'<font color=red>{message}</font>')
         else:
             self.lab_message.setText(message)
-
-
-class SyslogWindow(QtWidgets.QMainWindow):
-    def __init__(self, device, port: int):
-        self.device = device
-        super(SyslogWindow, self).__init__()
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        # 进行socekt配置，使其支持端口复用，否则发送方绑定5066，则无法使用该端口进行接收
-        self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.s.setblocking(True)
-        self.s.bind((return_ip(), port))
-        # 创建线程用于自动回应注册包
-        thread = Thread(target=self.child_thread, args=[self.s, ])
-        # 设置成守护线程
-        thread.setDaemon(True)
-        # 启动线程
-        thread.start()
-        self.ui = Ui_SyslogWindow()
-        self.ui.setupUi(self)
-        self.LSignal = LogSignal()
-        self.text = 'syslog'
-        self.LSignal.print_syslog.connect(
-            lambda: self.update_sysylog(self.text[22:-1].replace("\\n\\x00", "").replace(" : ", ":")))
-
-    def update_sysylog(self, text: str):
-        self.ui.syslog_text.append(text)
-
-    def child_thread(self, s: socket):
-        try:
-            while True:
-                buf, (dut_ip, dut_port) = s.recvfrom(1500)
-                self.text = str(buf)
-                self.LSignal.print_syslog.emit(self.text)
-        except OSError as err:
-            print(err)
-
-    def closeEvent(self, event) -> None:
-        set_pnum(self.device, 'P207', '')
-        self.s.close()
-
-
-class LogSignal(QtCore.QObject):
-    # 定义信号
-    print_syslog = Signal(str)
-
-    def __init__(self):
-        super(LogSignal, self).__init__()
 
 
 if __name__ == '__main__':

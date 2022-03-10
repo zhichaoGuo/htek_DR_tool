@@ -26,5 +26,20 @@
 
 ## 定义
 ### MainWindow 主窗口类
-#### MainWindow.D1 页面
-##### MainWindow.D1.ip 设备信息
+- self.D1
+- self.D2
+- self.D3
+- self.D4
+#### MainWindow.D1 页面类
+- self.device 当前页面绑定设备
+- self.btn_  当前页面btn控件
+- self.text_ 当前页面text控件
+- self.box_ 当前页面box控件
+- self.lab_ 点前页面lab控件
+##### MainWindow.D1.device 设备类
+- self.ip
+- self.user
+- self.password
+- self.mac
+- self.model
+- self.version
