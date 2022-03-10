@@ -26,7 +26,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             QtCore.Qt.WindowCloseButtonHint |  # 使能关闭按钮
                             QtCore.Qt.WindowStaysOnTopHint)  # 窗体总在最前端
         self.setupUi(self)
-        self.D1 = Tag(self,1)
+        self.D1 = Tag(self, 1)
         self.set_all_btn(self.D1, False)  # 按键加锁
         # 页面分类
         # self._set_tag()
@@ -41,9 +41,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # 检查ip合法性
         if isIPv4(tag.text_ip.text()):
             # 检查设备是否在线
-            if isOnline(tag.text_ip.text(), tag.box_password.currentText().split(':')[0], tag.box_password.currentText().split(':')[1]) == 1:
+            if isOnline(tag.text_ip.text(), tag.box_password.currentText().split(':')[0],
+                        tag.box_password.currentText().split(':')[1]) == 1:
                 # 生成设备对象包含ip mac version user password model
-                tag.device = VoipDevice(tag.text_ip.text(), tag.box_password.currentText().split(':')[0], tag.box_password.currentText().split(':')[1])
+                tag.device = VoipDevice(tag.text_ip.text(), tag.box_password.currentText().split(':')[0],
+                                        tag.box_password.currentText().split(':')[1])
                 # 设置页签为model（型号）
                 self.tabWidget.setTabText(self.tabWidget.indexOf(tag.tab),
                                           QCoreApplication.translate("MainWindow", tag.device.model, None))
@@ -53,7 +55,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 tag.lab_online.setText('<font color=green>█在线█</font>')
                 QMessageBox.about(self, '登录提示', tag.device.user + '绑定成功' + tag.device.model)
             # 设备在线但密码错误
-            elif isOnline(tag.text_ip.text(), tag.box_password.currentText().split(':')[0], tag.box_password.currentText().split(':')[1]) == 0:
+            elif isOnline(tag.text_ip.text(), tag.box_password.currentText().split(':')[0],
+                          tag.box_password.currentText().split(':')[1]) == 0:
                 tag.lab_online.setText('<font color=red>█失败█</font>')
                 self.set_all_btn(tag, False)
                 QMessageBox.about(self, '登录提示', '密码错误')
@@ -114,7 +117,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             tag.text_pvalue.setText(query_pnum(tag.device, str(tag.text_pnum.text())))
 
-    def f_btn_pset(self,tag):
+    def f_btn_pset(self, tag):
         if tag.text_pnum.text() == '':
             QMessageBox.about(self, '提示', 'P值不能为空')
         else:
@@ -124,7 +127,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def f_btn_register(self, tag):
         current_account = yaml.safe_load(open('register_date.yml', 'r', encoding='utf-8').read())[
-            tag.register_box.currentText()]
+            tag.box_register.currentText()]
         sip_server = current_account['sip_server']
         sip_user = current_account['sip_user']
         sip_password = current_account['sip_password']
@@ -138,11 +141,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                    'P34': sip_password}  # Authenticate Password
         set_pnums(tag.device, set_dic)
 
-    def f_btn_save_screen(self, device):
-        pic_data = save_screen(device)
+    def f_btn_save_screen(self, tag):
+        pic_data = save_screen(tag.device)
         file_name = '[' + str(datetime.datetime.now())[5:].replace(":", "·").replace("-", "").split(".")[0].replace(" ",
                                                                                                                     "]")
-        file_name = file_name.split(']')[0] + f'][{device.model}]' + file_name.split(']')[1]
+        file_name = file_name.split(']')[0] + f'][{tag.device.model}]' + file_name.split(']')[1]
         filePath = QFileDialog.getSaveFileName(self, '保存路径', f'{os.path.abspath(".")}\\screen\\{file_name}.bmp',
                                                '.bmp(*.bmp)')
         with open(filePath[0], "wb") as f:
@@ -183,38 +186,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_register.clicked.connect(lambda: self.f_btn_register(tag))
         tag.btn_savescreen.clicked.connect(lambda: self.f_btn_save_screen(tag))
 
-    def _set_tag(self):
-        # 页面分类
-        self.D1.tab = self.tab
-        # 话机信息
-        self.D1.text_ip = self.D1_text_ip
-        self.D1.box_password = self.D1_box_password
-        self.D1.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
-        self.D1.btn_band = self.D1_btn_band
-        self.D1.lab_state = self.D1_lab_state
-        # 功能区
-        self.D1.btn_autotest = self.D1_btn_autotest
-        self.D1.btn_telnet = self.D1_btn_telnet
-        self.D1.btn_reboot = self.D1_btn_reboot
-        self.D1.btn_factory = self.D1_btn_factory
-        self.D1.btn_logserver = self.D1_btn_logserver
-        # 指派区
-        self.D1.text_fw = self.D1_text_fw
-        self.D1.text_cfg = self.D1_text_cfg
-        self.D1.btn_ap = self.D1_btn_ap
-        # P值区
-        self.D1.text_pnum = self.D1_text_pnum
-        self.D1.text_pvalue = self.D1_text_pvalue
-        self.D1.btn_pselect = self.D1_btn_pselect
-        self.D1.btn_pset = self.D1_btn_pset
-        # 注册区
-        self.D1.box_register = self.D1_box_register
-        self.D1.box_register.addItems(
-            list(yaml.safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
-        self.D1.btn_register = self.D1_btn_register
-        # 保存区
-        self.D1.btn_savescreen = self.D1_btn_savescreen
-
     def show_message(self, message, level=0):
         if level == 1:
             self.lab_message.setText(f'<font color=red>{message}</font>')
@@ -241,7 +212,8 @@ class SyslogWindow(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
         self.LSignal = LogSignal()
         self.text = 'syslog'
-        self.LSignal.print_syslog.connect(lambda: self.update_sysylog(self.text))
+        self.LSignal.print_syslog.connect(
+            lambda: self.update_sysylog(self.text[22:-1].replace("\\n\\x00", "").replace(" : ", ":")))
 
     def update_sysylog(self, text: str):
         self.ui.syslog_text.append(text)
