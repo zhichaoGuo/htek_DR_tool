@@ -1,3 +1,4 @@
+import webbrowser
 from datetime import datetime
 from os.path import abspath
 import sys
@@ -7,7 +8,7 @@ from PySide2.QtWidgets import QMainWindow, QMessageBox, QFileDialog
 from PySide2.QtCore import Slot, QCoreApplication,Qt
 
 from tool.hl_device import VoipDevice
-from tool.test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen
+from tool.test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen, open_web
 from tool.test_util import isIPv4, hl_request, isOnline, return_ip
 from ui.ui_main import Ui_MainWindow
 
@@ -163,7 +164,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             f.write(pic_data)
         f.close()
 
-    def f_btn_save_syslog(self, device):
+    def f_btn_save_syslog(self, tag):
+        # 起新线程下载syslog
         pass
 
     def f_btn_save_cfg(self, device):

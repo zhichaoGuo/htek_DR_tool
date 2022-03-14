@@ -1,3 +1,4 @@
+import webbrowser
 from urllib import parse
 
 from tool.test_util import hl_request, parsePhoneStatusXml
@@ -106,6 +107,17 @@ def save_screen(device):
         return r.content
     except Exception as err:
         print('can not send request to save_screen :%s' % err)
+        return False
+
+
+def open_web(device):
+    url = "http://%s/" % device.ip
+    auth = (device.user, device.password)
+    try:
+        webbrowser.open(url)
+        return True
+    except Exception as err:
+        print(err)
         return False
 
 
