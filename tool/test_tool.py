@@ -1,4 +1,9 @@
+import threading
+from datetime import datetime
+from os.path import abspath
 from urllib import parse
+
+from PySide2.QtWidgets import QFileDialog
 
 from tool.test_util import hl_request, parsePhoneStatusXml
 
@@ -108,6 +113,17 @@ def save_screen(device):
         print('can not send request to save_screen :%s' % err)
         return False
 
+def save_syslog(windows,device):
+    url = "http://%s/download_syslog" % device.ip
+    auth = (device.user, device.password)
+    r = hl_request('GET',url,auth=auth)
+    syslog_data = r.content
+    file_name = '[' + str(datetime.now())[5:].replace(":", "·").replace("-", "").split(".")[0].replace(" ", "]")
+    file_name = file_name.split(']')[0] + f'][{device.model}]' + file_name.split(']')[1]
+    filePath = QFileDialog.getSaveFileName(windows, '保存路径', f'{abspath(".")}\\screen\\{file_name}.txt', '.txt(*.txt)')
+    with open(filePath[0], "wb") as f:
+        f.write(syslog_data)
+    f.close()
 
 if __name__ == '__main__':
     pass

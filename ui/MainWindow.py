@@ -1,13 +1,14 @@
 from datetime import datetime
 from os.path import abspath
 import sys
+from threading import Thread
 
 from yaml import safe_load
 from PySide2.QtWidgets import QMainWindow, QMessageBox, QFileDialog
 from PySide2.QtCore import Slot, QCoreApplication,Qt
 
 from tool.hl_device import VoipDevice
-from tool.test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen
+from tool.test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen, save_syslog
 from tool.test_util import isIPv4, hl_request, isOnline, return_ip
 from ui.ui_main import Ui_MainWindow
 
@@ -164,7 +165,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         f.close()
 
     def f_btn_save_syslog(self, device):
-        pass
+        thread = Thread(target=save_syslog, args=[self,device, ])
+        # 设置成守护线程
+        thread.setDaemon(True)
+        # 启动线程
+        thread.start()
 
     def f_btn_save_cfg(self, device):
         pass
