@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>HTT - syslog server</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTextBrowser" name="syslog_text">
@@ -47,7 +47,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>全部复制</string>
     </property>
    </widget>
   </widget>

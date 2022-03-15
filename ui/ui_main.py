@@ -17,7 +17,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(212, 856)
+        MainWindow.resize(209, 856)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.tabWidget = QTabWidget(self.centralwidget)
@@ -477,7 +477,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 212, 23))
+        self.menubar.setGeometry(QRect(0, 0, 209, 23))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -492,7 +492,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"HTT", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"\u8bbe\u5907\u4fe1\u606f", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u8bdd\u673aIP", None))
         self.D1_btn_band.setText(QCoreApplication.translate("MainWindow", u"\u7ed1\u5b9a\u8bbe\u5907", None))

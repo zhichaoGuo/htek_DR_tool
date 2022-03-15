@@ -40,8 +40,8 @@ class Ui_SyslogWindow(object):
     # setupUi
 
     def retranslateUi(self, SyslogWindow):
-        SyslogWindow.setWindowTitle(QCoreApplication.translate("SyslogWindow", u"MainWindow", None))
+        SyslogWindow.setWindowTitle(QCoreApplication.translate("SyslogWindow", u"HTT - syslog server", None))
         self.syslog_lab.setText(QCoreApplication.translate("SyslogWindow", u"TextLabel", None))
-        self.syslog_btn_copy.setText(QCoreApplication.translate("SyslogWindow", u"PushButton", None))
+        self.syslog_btn_copy.setText(QCoreApplication.translate("SyslogWindow", u"\u5168\u90e8\u590d\u5236", None))
     # retranslateUi
 
