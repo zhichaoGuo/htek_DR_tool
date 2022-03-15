@@ -2,14 +2,17 @@ import webbrowser
 from datetime import datetime
 from os.path import abspath
 import sys
+from threading import Thread
 
 from yaml import safe_load
 from PySide2.QtWidgets import QMainWindow, QMessageBox, QFileDialog
 from PySide2.QtCore import Slot, QCoreApplication,Qt
 
+from tool.HL_Signal import HlSignal
 from tool.hl_device import VoipDevice
-from tool.test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen, open_web
-from tool.test_util import isIPv4, hl_request, isOnline, return_ip
+from tool.test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen, open_web, \
+    save_syslog, save_xml_cfg
+from tool.test_util import isIPv4, hl_request, isOnline, return_ip, save_file
 from ui.ui_main import Ui_MainWindow
 
 
@@ -36,6 +39,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._connect_signal(self.D2)
         self._connect_signal(self.D3)
         self._connect_signal(self.D4)
+        # 创建信号
+        self.HlSignal = HlSignal()
+        self.file = 'syslog'
+        self.file_model = 'UC'
+        self.file_methd = 'txt'
+        self.HlSignal.save_file.connect(
+            lambda: save_file(self,self.file,self.file_model,self.file_methd))
 
     def closeEvent(self, event) -> None:
         sys.exit(0)
@@ -166,10 +176,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def f_btn_save_syslog(self, tag):
         # 起新线程下载syslog
-        pass
+        thread = Thread(target=save_syslog, args=[self,tag.device, ])
+        # 设置成守护线程
+        thread.setDaemon(True)
+        # 启动线程
+        thread.start()
 
-    def f_btn_save_cfg(self, device):
-        pass
+    def f_btn_save_cfg(self, tag):
+        # 起新线程下载syslog
+        thread = Thread(target=save_xml_cfg, args=[self, tag.device, ])
+        # 设置成守护线程
+        thread.setDaemon(True)
+        # 启动线程
+        thread.start()
 
     def set_all_btn(self, tag, value):
         if value in [True, False]:
@@ -198,6 +217,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_pset.clicked.connect(lambda: self.f_btn_pset(tag))
         tag.btn_register.clicked.connect(lambda: self.f_btn_register(tag))
         tag.btn_savescreen.clicked.connect(lambda: self.f_btn_save_screen(tag))
+        tag.btn_savelog.clicked.connect(lambda: self.f_btn_save_syslog(tag))
+        tag.btn_savecfg.clicked.connect(lambda: self.f_btn_save_cfg(tag))
 
     def show_message(self, message, level=0):
         if level == 1:

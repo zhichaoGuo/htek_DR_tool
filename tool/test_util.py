@@ -1,5 +1,10 @@
+from datetime import datetime
+from os.path import abspath
+
 import requests
 import xml.etree.ElementTree as ET
+
+from PySide2.QtWidgets import QFileDialog
 
 
 def hl_request(method, url, **kwargs):
@@ -75,3 +80,14 @@ def return_ip():
     print('ip is %s' % ip)
     s.close()
     return ip
+
+
+def save_file(window, file_buf, model, file_methd):
+    pic_data = file_buf
+    file_name = '[' + str(datetime.now())[5:].replace(":", "·").replace("-", "").split(".")[0].replace(" ", "]")
+    file_name = file_name.split(']')[0] + f'][{model}]' + file_name.split(']')[1]
+    filePath = QFileDialog.getSaveFileName(window, '保存路径', f'{abspath(".")}\\screen\\{file_name}.{file_methd}',
+                                           f'.{file_methd}(*.{file_methd})')
+    with open(filePath[0], "wb") as f:
+        f.write(pic_data)
+    f.close()

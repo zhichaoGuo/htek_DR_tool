@@ -4,6 +4,7 @@ from threading import Thread
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtCore import Signal
 
+from tool.HL_Signal import HlSignal
 from tool.test_tool import set_pnum
 from tool.test_util import return_ip
 from ui.ui_syslog import Ui_SyslogWindow
@@ -26,7 +27,7 @@ class SyslogWindow(QtWidgets.QMainWindow):
         thread.start()
         self.ui = Ui_SyslogWindow()
         self.ui.setupUi(self)
-        self.LSignal = LogSignal()
+        self.LSignal = HlSignal()
         self.text = 'syslog'
         self.LSignal.print_syslog.connect(
             lambda: self.update_sysylog(self.text[22:-1].replace("\\n\\x00", "").replace(" : ", ":")))
@@ -47,10 +48,3 @@ class SyslogWindow(QtWidgets.QMainWindow):
         set_pnum(self.device, 'P207', '')
         self.s.close()
 
-
-class LogSignal(QtCore.QObject):
-    # 定义信号
-    print_syslog = Signal(str)
-
-    def __init__(self):
-        super(LogSignal, self).__init__()

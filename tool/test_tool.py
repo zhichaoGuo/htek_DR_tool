@@ -1,5 +1,9 @@
 import webbrowser
+from datetime import datetime
+from os.path import abspath
 from urllib import parse
+
+from PySide2.QtWidgets import QFileDialog
 
 from tool.test_util import hl_request, parsePhoneStatusXml
 
@@ -109,6 +113,23 @@ def save_screen(device):
         print('can not send request to save_screen :%s' % err)
         return False
 
+def save_syslog(window,device):
+    url = "http://%s/download_log" % device.ip
+    auth = (device.user, device.password)
+    r = hl_request('GET', url, auth=auth)
+    window.file = r.content
+    window.file_model = device.model
+    window.file_methd = 'txt'
+    window.HlSignal.save_file.emit(window,window.file,window.file_model,window.file_methd)
+
+def save_xml_cfg(window,device):
+    url = "http://%s/download_xml_cfg" % device.ip
+    auth = (device.user, device.password)
+    r = hl_request('GET', url, auth=auth)
+    window.file = r.content
+    window.file_model = device.model
+    window.file_methd = 'xml'
+    window.HlSignal.save_file.emit(window,window.file,window.file_model,window.file_methd)
 
 def open_web(device):
     url = "http://%s/" % device.ip
