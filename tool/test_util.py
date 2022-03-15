@@ -88,6 +88,9 @@ def save_file(window, file_buf, model, file_methd):
     file_name = file_name.split(']')[0] + f'][{model}]' + file_name.split(']')[1]
     filePath = QFileDialog.getSaveFileName(window, '保存路径', f'{abspath(".")}\\screen\\{file_name}.{file_methd}',
                                            f'.{file_methd}(*.{file_methd})')
-    with open(filePath[0], "wb") as f:
-        f.write(pic_data)
-    f.close()
+    try:
+        with open(filePath[0], "wb") as f:
+            f.write(pic_data)
+        f.close()
+    except FileNotFoundError:
+        pass

@@ -103,20 +103,33 @@ def AutoProvisionNow(device):
     return True
 
 
-def save_screen(device):
+def save_screen(window,device):
     url = "http://%s/download_screen" % device.ip
     auth = (device.user, device.password)
     try:
         r = hl_request('GET', url, auth=auth)
-        return r.content
+        if r.status_code != 200:
+            print('save screen fild :%s' % r.status_code)
+            return -1
     except Exception as err:
-        print('can not send request to save_screen :%s' % err)
-        return False
+        print('save screen fild ')
+        return -1
+    window.file = r.content
+    window.file_model = device.model
+    window.file_methd = 'bmp'
+    window.HlSignal.save_file.emit(window, r.content, device.model, 'bmp')
 
 def save_syslog(window,device):
     url = "http://%s/download_log" % device.ip
     auth = (device.user, device.password)
-    r = hl_request('GET', url, auth=auth)
+    try:
+        r = hl_request('GET', url, auth=auth)
+        if r.status_code != 200:
+            print('save sysylog fild :%s'% r.status_code)
+            return -1
+    except Exception as err:
+        print('save sysylog fild ' )
+        return -1
     window.file = r.content
     window.file_model = device.model
     window.file_methd = 'txt'
@@ -125,7 +138,14 @@ def save_syslog(window,device):
 def save_xml_cfg(window,device):
     url = "http://%s/download_xml_cfg" % device.ip
     auth = (device.user, device.password)
-    r = hl_request('GET', url, auth=auth)
+    try:
+        r = hl_request('GET', url, auth=auth)
+        if r.status_code != 200:
+            print('save xml_cfg fild :%s' % r.status_code)
+            return -1
+    except Exception as err:
+        print('save xml_cfg fild ')
+        return -1
     window.file = r.content
     window.file_model = device.model
     window.file_methd = 'xml'

@@ -166,13 +166,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         set_pnums(tag.device, set_dic)
 
     def f_btn_save_screen(self, tag):
-        pic_data = save_screen(tag.device)
-        file_name = '[' + str(datetime.now())[5:].replace(":", "·").replace("-", "").split(".")[0].replace(" ", "]")
-        file_name = file_name.split(']')[0] + f'][{tag.device.model}]' + file_name.split(']')[1]
-        filePath = QFileDialog.getSaveFileName(self, '保存路径', f'{abspath(".")}\\screen\\{file_name}.bmp', '.bmp(*.bmp)')
-        with open(filePath[0], "wb") as f:
-            f.write(pic_data)
-        f.close()
+        # 起新线程下载syslog
+        thread = Thread(target=save_screen, args=[self, tag.device, ])
+        # 设置成守护线程
+        thread.setDaemon(True)
+        # 启动线程
+        thread.start()
 
     def f_btn_save_syslog(self, tag):
         # 起新线程下载syslog
