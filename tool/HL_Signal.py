@@ -7,5 +7,6 @@ class HlSignal(QtCore.QObject):
     print_syslog = Signal(str)
     download_syslog_over = Signal(str)
     save_file = Signal(str,bytes,str,str)
+    show_message = Signal(str,int)
     def __init__(self):
         super(HlSignal, self).__init__()
