@@ -1,4 +1,5 @@
 import sys
+import threading
 from threading import Thread
 
 from yaml import safe_load
@@ -9,7 +10,7 @@ from tool.HL_Signal import HlSignal
 from tool.hl_device import VoipDevice
 from tool.test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen, open_web, \
     save_syslog, save_xml_cfg
-from tool.test_util import isIPv4, hl_request, isOnline, return_ip, save_file
+from tool.test_util import isIPv4, hl_request, isOnline, return_ip, save_file, loop_check_is_online
 from ui.ui_main import Ui_MainWindow
 
 
@@ -90,7 +91,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def f_btn_autotest(self, device):
         """执行 enable_autotest_api"""
-        self.show_message('执行auto test')
+        self.show_message('执行 auto test 中')
         url = 'http://%s/enable_autotest_api' % device.ip
         r = hl_request('GET', url, auth=(device.user, device.password))
         if r.status_code != 200:
@@ -100,22 +101,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def f_btn_telnet(self, device):
         """执行 enable telnet 和 enable ftp"""
+        self.show_message('执行 telnet 中')
         self.f_btn_autotest(device)
         url1 = 'http://%s/AutoTest&action=enabletelnet' % device.ip
         r = hl_request('GET', url1, auth=(device.user, device.password))
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'enable telnet失败')
+            return -1
         url2 = 'http://%s/AutoTest&action=enableftp' % device.ip
         r = hl_request('GET', url2, auth=(device.user, device.password))
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'enable ftp失败')
+            return -1
+        self.show_message('telnet 成功')
 
-    def f_btn_reboot(self, device):
+    def f_btn_reboot(self, tag):
+        device = tag.device
         """重启话机"""
         url = 'http://%s/rb_phone.htm' % device.ip
         r = hl_request('GET', url, auth=(device.user, device.password))
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'reboot失败')
+        self.show_message('话机正在重启')
+        tag.lab_online.setText('<font color=red>█重启█</font>')
+        self.set_all_btn(tag,False)
+        thread = Thread(target=loop_check_is_online, args=[self,tag, ])
+        # 设置成守护线程
+        thread.setDaemon(True)
+        # 启动线程
+        thread.start()
 
     def f_btn_factory(self, device):
         """恢复出厂"""
@@ -216,7 +230,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_band.clicked.connect(lambda: self.f_btn_band(tag))
         tag.btn_autotest.clicked.connect(lambda: self.f_btn_autotest(tag.device))
         tag.btn_telnet.clicked.connect(lambda: self.f_btn_telnet(tag.device))
-        tag.btn_reboot.clicked.connect(lambda: self.f_btn_reboot(tag.device))
+        tag.btn_reboot.clicked.connect(lambda: self.f_btn_reboot(tag))
         tag.btn_factory.clicked.connect(lambda: self.f_btn_factory(tag.device))
         tag.btn_logserver.clicked.connect(lambda: self.f_btn_show_syslog(tag.device, tag.logserver_port))
         tag.btn_ap.clicked.connect(lambda: self.f_btn_ap(tag))

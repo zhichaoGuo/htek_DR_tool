@@ -1,5 +1,6 @@
 from datetime import datetime
 from os.path import abspath
+from time import sleep
 
 import requests
 import xml.etree.ElementTree as ET
@@ -95,3 +96,19 @@ def save_file(window, file_buf, model, file_methd):
         window.show_message('保存%s文件成功' % file_methd)
     except FileNotFoundError:
         pass
+
+
+def loop_check_is_online(window,tag, timeout=50):
+    device = tag.device
+    sleep(36)
+    for i in range(timeout):
+        sleep(4)
+        if isOnline(device.ip, device.user, device.password)==1:
+            window.show_message('话机启动成功')
+            tag.lab_online.setText('<font color=green>█在线█</font>')
+            window.set_all_btn(tag,True)
+            return 1
+    print('still not online')
+    window.show_message('话机仍未成功',1)
+    tag.lab_online.setText('<font color=red>█离线█</font>')
+    return -1
