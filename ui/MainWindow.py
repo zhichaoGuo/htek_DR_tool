@@ -90,7 +90,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def f_btn_autotest(self, device):
         """执行 enable_autotest_api"""
-        self.HlSignal.show_message.emit('执行auto test')
+        self.show_message('执行auto test')
         url = 'http://%s/enable_autotest_api' % device.ip
         r = hl_request('GET', url, auth=(device.user, device.password))
         if r.status_code != 200:
