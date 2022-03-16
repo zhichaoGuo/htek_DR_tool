@@ -1,11 +1,8 @@
-import webbrowser
-from datetime import datetime
-from os.path import abspath
 import sys
 from threading import Thread
 
 from yaml import safe_load
-from PySide2.QtWidgets import QMainWindow, QMessageBox, QFileDialog
+from PySide2.QtWidgets import QMainWindow, QMessageBox
 from PySide2.QtCore import Slot, QCoreApplication,Qt
 
 from tool.HL_Signal import HlSignal
@@ -221,7 +218,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_telnet.clicked.connect(lambda: self.f_btn_telnet(tag.device))
         tag.btn_reboot.clicked.connect(lambda: self.f_btn_reboot(tag.device))
         tag.btn_factory.clicked.connect(lambda: self.f_btn_factory(tag.device))
-        tag.btn_logserver.clicked.connect(lambda: self.f_btn_show_syslog(tag.device, 5129))
+        tag.btn_logserver.clicked.connect(lambda: self.f_btn_show_syslog(tag.device, tag.logserver_port))
         tag.btn_ap.clicked.connect(lambda: self.f_btn_ap(tag))
         tag.btn_pselect.clicked.connect(lambda: self.f_btn_pslect(tag))
         tag.btn_pset.clicked.connect(lambda: self.f_btn_pset(tag))

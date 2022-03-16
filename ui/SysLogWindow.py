@@ -1,8 +1,8 @@
 from socket import socket,AF_INET,SOCK_DGRAM,SOL_SOCKET,SO_REUSEADDR
 from threading import Thread
 
-from PySide2 import QtWidgets, QtCore
-from PySide2.QtCore import Signal
+from pyperclip import copy
+from PySide2 import QtWidgets
 
 from tool.HL_Signal import HlSignal
 from tool.test_tool import set_pnum
@@ -31,6 +31,11 @@ class SyslogWindow(QtWidgets.QMainWindow):
         self.text = 'syslog'
         self.LSignal.print_syslog.connect(
             lambda: self.update_sysylog(self.text[22:-1].replace("\\n\\x00", "").replace(" : ", ":")))
+        self.ui.syslog_btn_copy.clicked.connect(self.f_btn_copy_all)
+
+    def f_btn_copy_all(self):
+        print('copy all syslog')
+        copy(self.ui.syslog_text.document().toPlainText())
 
     def update_sysylog(self, text: str):
         self.ui.syslog_text.append(text)

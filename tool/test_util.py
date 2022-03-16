@@ -77,7 +77,7 @@ def return_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(('8.8.8.8', 80))
     ip = s.getsockname()[0]
-    print('ip is %s' % ip)
+    print('server ip is %s' % ip)
     s.close()
     return ip
 
