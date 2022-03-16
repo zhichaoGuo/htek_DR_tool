@@ -118,6 +118,7 @@ def save_screen(window,device):
     window.file_model = device.model
     window.file_methd = 'bmp'
     window.HlSignal.save_file.emit(window, r.content, device.model, 'bmp')
+    window.HlSignal.show_message.emit('保存截图成功')
 
 def save_syslog(window,device):
     url = "http://%s/download_log" % device.ip
@@ -134,6 +135,7 @@ def save_syslog(window,device):
     window.file_model = device.model
     window.file_methd = 'txt'
     window.HlSignal.save_file.emit(window,window.file,window.file_model,window.file_methd)
+    window.HlSignal.show_message.emit('保存截图成功')
 
 def save_xml_cfg(window,device):
     url = "http://%s/download_xml_cfg" % device.ip
@@ -150,6 +152,7 @@ def save_xml_cfg(window,device):
     window.file_model = device.model
     window.file_methd = 'xml'
     window.HlSignal.save_file.emit(window,window.file,window.file_model,window.file_methd)
+    window.HlSignal.show_message.emit('保存截图成功')
 
 def open_web(device):
     url = "http://%s/" % device.ip
