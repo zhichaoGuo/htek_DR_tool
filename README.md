@@ -43,3 +43,26 @@
 - self.mac
 - self.model
 - self.version
+# Release Note
+## 0.0.1
+- 基本界面搭建及绑定功能实现
+- 支持P值查询
+- 支持指派升级
+- 支持auto test、telnet、reboot、factory
+## 0.0.2
+- 支持log server
+- 支持截图保存
+## 0.1.0
+- 重构整体代码
+- 优化性能
+## 0.1.1
+- 优化导入
+- 整理目录结构
+## 0.1.2
+- 支持syslog保存
+- 支持xml cfg保存
+## 0.1.3
+- 优化整理信号机制
+- 防范保存截图时主线程卡死
+- 更新title为HlTT
+- 合并重构分支到主分支

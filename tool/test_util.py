@@ -92,5 +92,6 @@ def save_file(window, file_buf, model, file_methd):
         with open(filePath[0], "wb") as f:
             f.write(pic_data)
         f.close()
+        window.show_message('保存%s文件成功' % file_methd)
     except FileNotFoundError:
         pass

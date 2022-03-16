@@ -46,7 +46,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.file_methd = 'txt'
         self.HlSignal.save_file.connect(
             lambda: save_file(self,self.file,self.file_model,self.file_methd))
-        self.HlSignal.show_message.connect(self.show_message)
+        self.HlSignal.show_message.connect(self._show_message)
 
     def closeEvent(self, event) -> None:
         sys.exit(0)
@@ -71,25 +71,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 # 更新状态，展示提示框
                 tag.lab_online.setText('<font color=green>█在线█</font>')
                 QMessageBox.about(self, '登录提示', tag.device.user + '绑定成功' + tag.device.model)
-                self.HlSignal.show_message.emit('绑定成功')
+                self.show_message('绑定成功')
             # 设备在线但密码错误
             elif isOnline(tag.text_ip.text(), tag.box_password.currentText().split(':')[0],
                           tag.box_password.currentText().split(':')[1]) == 0:
                 tag.lab_online.setText('<font color=red>█失败█</font>')
                 self.set_all_btn(tag, False)
                 QMessageBox.about(self, '登录提示', '密码错误')
-                self.HlSignal.show_message.emit('绑定失败：密码错误',1)
+                self.show_message('绑定失败：密码错误',1)
             # 设备离线
             else:
                 tag.lab_online.setText('<font color=red>█离线█</font>')
                 self.set_all_btn(tag, False)
                 QMessageBox.about(self, '登录提示', '无响应')
-                self.HlSignal.show_message.emit('绑定失败：设备无响应',1)
+                self.show_message('绑定失败：设备无响应',1)
         else:
             self.tabWidget.setTabText(self.tabWidget.indexOf(tag.tab),
                                       QCoreApplication.translate("MainWindow", "设备", None))
             QMessageBox.about(self, '登录提示', 'not ipv4')
-            self.HlSignal.show_message.emit('绑定失败：输入ip格式错误',1)
+            self.show_message('绑定失败：输入ip格式错误',1)
 
     def f_btn_autotest(self, device):
         """执行 enable_autotest_api"""
@@ -99,7 +99,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'enable_autotest失败')
             self.HlSignal.show_message.emit('auto test 失败，返回码为 %s' % r.status_code,1)
-        self.HlSignal.show_message.emit('auto test 成功')
+        self.show_message('auto test 成功')
 
     def f_btn_telnet(self, device):
         """执行 enable telnet 和 enable ftp"""
@@ -180,6 +180,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         thread.setDaemon(True)
         # 启动线程
         thread.start()
+        self.show_message('正在保存截图')
 
     def f_btn_save_syslog(self, tag):
         # 起新线程下载syslog
@@ -188,6 +189,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         thread.setDaemon(True)
         # 启动线程
         thread.start()
+        self.show_message('正在保存日志')
 
     def f_btn_save_cfg(self, tag):
         # 起新线程下载syslog
@@ -196,6 +198,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         thread.setDaemon(True)
         # 启动线程
         thread.start()
+        self.show_message('正在保存配置')
 
     def set_all_btn(self, tag, value):
         if value in [True, False]:
@@ -228,6 +231,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_savecfg.clicked.connect(lambda: self.f_btn_save_cfg(tag))
 
     def show_message(self, message, level=0):
+        self.HlSignal.show_message.emit(message,level)
+
+    def _show_message(self,message, level=0):
         if level == 1:
             self.label_9.setText(f'<font color=red>{message}</font>')
         else:
