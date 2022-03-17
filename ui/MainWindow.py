@@ -1,5 +1,4 @@
 import sys
-import threading
 from threading import Thread
 
 from yaml import safe_load
@@ -62,30 +61,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 # 设置页签为model（型号）
                 self.tabWidget.setTabText(self.tabWidget.indexOf(tag.tab),
                                           QCoreApplication.translate("MainWindow", tag.device.model, None))
-                self.set_all_btn(tag, True)  # 解锁页面btn
+
                 # 查询并展示指派路径
                 tag.text_fw.setText(query_pnum(tag.device, '192'))
                 tag.text_cfg.setText(query_pnum(tag.device, '237'))
-                # 更新状态，展示提示框
-                tag.lab_online.setText('<font color=green>█在线█</font>')
-                QMessageBox.about(self, '登录提示', tag.device.user + '绑定成功' + tag.device.model)
+                tag.connect_state(True)
                 self.show_message('绑定成功')
             # 设备在线但密码错误
             elif isOnline(tag.text_ip.text(), tag.box_password.currentText().split(':')[0],
                           tag.box_password.currentText().split(':')[1]) == 0:
+                tag.connect_state(False)
                 tag.lab_online.setText('<font color=red>█失败█</font>')
-                self.set_all_btn(tag, False)
-                QMessageBox.about(self, '登录提示', '密码错误')
                 self.show_message('绑定失败：密码错误',1)
             # 设备离线
             else:
-                tag.lab_online.setText('<font color=red>█离线█</font>')
-                self.set_all_btn(tag, False)
-                QMessageBox.about(self, '登录提示', '无响应')
+                tag.connect_state(False)
                 self.show_message('绑定失败：设备无响应',1)
         else:
             self.tabWidget.setTabText(self.tabWidget.indexOf(tag.tab),
                                       QCoreApplication.translate("MainWindow", "设备", None))
+            tag.connect_state(False)
             QMessageBox.about(self, '登录提示', 'not ipv4')
             self.show_message('绑定失败：输入ip格式错误',1)
 
@@ -107,11 +102,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         r = hl_request('GET', url1, auth=(device.user, device.password))
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'enable telnet失败')
+            self.show_message('telnet 失败',1)
             return -1
         url2 = 'http://%s/AutoTest&action=enableftp' % device.ip
         r = hl_request('GET', url2, auth=(device.user, device.password))
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'enable ftp失败')
+            self.show_message('ftp 失败', 1)
             return -1
         self.show_message('telnet 成功')
 
@@ -123,21 +120,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'reboot失败')
         self.show_message('话机正在重启')
+        tag.connect_state(False)
         tag.lab_online.setText('<font color=red>█重启█</font>')
-        self.set_all_btn(tag,False)
         thread = Thread(target=loop_check_is_online, args=[self,tag, ])
         # 设置成守护线程
         thread.setDaemon(True)
         # 启动线程
         thread.start()
 
-    def f_btn_factory(self, device):
+    def f_btn_factory(self, tag):
+        device = tag.device
         """恢复出厂"""
         self.f_btn_autotest(device)
         url = 'http://%s/Abyss/FactoryReset' % device.ip
         r = hl_request('GET', url, auth=(device.user, device.password))
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'reset factory失败')
+        self.show_message('话机正在重启')
+        tag.connect_state(False)
+        tag.lab_online.setText('<font color=red>█重启█</font>')
+        thread = Thread(target=loop_check_is_online, args=[self, tag, ])
+        # 设置成守护线程
+        thread.setDaemon(True)
+        # 启动线程
+        thread.start()
 
     def f_btn_show_syslog(self, device, port: int):
         """打开syslog服务器并展示界面"""
@@ -211,7 +217,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         thread.start()
         self.show_message('正在保存配置')
 
-    def set_all_btn(self, tag, value):
+    @staticmethod
+    def set_all_btn(tag, value):
         if value in [True, False]:
             tag.btn_autotest.setEnabled(value)
             tag.btn_telnet.setEnabled(value)
@@ -231,7 +238,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_autotest.clicked.connect(lambda: self.f_btn_autotest(tag.device))
         tag.btn_telnet.clicked.connect(lambda: self.f_btn_telnet(tag.device))
         tag.btn_reboot.clicked.connect(lambda: self.f_btn_reboot(tag))
-        tag.btn_factory.clicked.connect(lambda: self.f_btn_factory(tag.device))
+        tag.btn_factory.clicked.connect(lambda: self.f_btn_factory(tag))
         tag.btn_logserver.clicked.connect(lambda: self.f_btn_show_syslog(tag.device, tag.logserver_port))
         tag.btn_ap.clicked.connect(lambda: self.f_btn_ap(tag))
         tag.btn_pselect.clicked.connect(lambda: self.f_btn_pslect(tag))

@@ -141,3 +141,13 @@ class Tag:
             self.btn_savescreen = ui.D4_btn_savescreen
             self.btn_savelog = ui.D4_btn_savelog
             self.btn_savecfg = ui.D4_btn_savecfg
+
+    def connect_state(self,state):
+        if state in [True,False]:
+            MainWindow.set_all_btn(self,state)
+            if state is False:
+                self.lab_online.setText('<font color=red>█离线█</font>')
+            else:
+                self.lab_online.setText('<font color=green>█在线█</font>')
+        else:
+            print('connect state fail')
