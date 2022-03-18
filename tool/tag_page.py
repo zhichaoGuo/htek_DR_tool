@@ -1,5 +1,6 @@
 from yaml import safe_load
 
+from tool.test_tool import query_pnum
 from ui.MainWindow import MainWindow
 
 
@@ -151,3 +152,16 @@ class Tag:
                 self.lab_online.setText('<font color=green>█在线█</font>')
         else:
             print('connect state fail')
+
+    def refresh_state(self):
+        self.text_fw.setText(query_pnum(self.device, '192'))
+        self.text_cfg.setText(query_pnum(self.device, '237'))
+        if self.text_pnum.text() == '':
+            self.text_pvalue.setText('')
+        else:
+            self.text_pvalue.setText(query_pnum(self.device, str(self.text_pnum.text())))
+
+    def clean_state(self):
+        self.text_fw.setText('')
+        self.text_cfg.setText('')
+        self.text_pvalue.setText('')

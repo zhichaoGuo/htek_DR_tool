@@ -61,10 +61,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 # 设置页签为model（型号）
                 self.tabWidget.setTabText(self.tabWidget.indexOf(tag.tab),
                                           QCoreApplication.translate("MainWindow", tag.device.model, None))
-
                 # 查询并展示指派路径
-                tag.text_fw.setText(query_pnum(tag.device, '192'))
-                tag.text_cfg.setText(query_pnum(tag.device, '237'))
+                tag.refresh_state()
                 tag.connect_state(True)
                 self.show_message('绑定成功')
             # 设备在线但密码错误
@@ -75,11 +73,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.show_message('绑定失败：密码错误',1)
             # 设备离线
             else:
+                tag.clean_state()
                 tag.connect_state(False)
                 self.show_message('绑定失败：设备无响应',1)
+        # ip 不为IPV4
         else:
             self.tabWidget.setTabText(self.tabWidget.indexOf(tag.tab),
                                       QCoreApplication.translate("MainWindow", "设备", None))
+            tag.clean_state()
             tag.connect_state(False)
             QMessageBox.about(self, '登录提示', 'not ipv4')
             self.show_message('绑定失败：输入ip格式错误',1)
@@ -162,16 +163,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         AutoProvisionNow(tag.device)
 
     def f_btn_pslect(self, tag):
-        if tag.text_pnum.text() == '':
-            tag.text_pvalue.setText('')
-        else:
-            tag.text_pvalue.setText(query_pnum(tag.device, str(tag.text_pnum.text())))
+        tag.refresh_state()
 
     def f_btn_pset(self, tag):
         if tag.text_pnum.text() == '':
             QMessageBox.about(self, '提示', 'P值不能为空')
         else:
             ret = set_pnum(tag.device, 'P' + tag.text_pnum.text(), tag.text_pvalue.text())
+            tag.refresh_state()
             if not ret:
                 QMessageBox.about(self, '提示', 'P值设置失败')
 
