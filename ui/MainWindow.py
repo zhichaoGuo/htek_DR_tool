@@ -1,3 +1,4 @@
+import os
 import sys
 from threading import Thread
 
@@ -216,6 +217,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         thread.start()
         self.show_message('正在保存配置')
 
+    def f_btn_open_ptxt(self):
+        os.system("notepad.exe P值表.txt")
+
     @staticmethod
     def set_all_btn(tag, value):
         if value in [True, False]:
@@ -241,11 +245,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_logserver.clicked.connect(lambda: self.f_btn_show_syslog(tag.device, tag.logserver_port))
         tag.btn_ap.clicked.connect(lambda: self.f_btn_ap(tag))
         tag.btn_pselect.clicked.connect(lambda: self.f_btn_pslect(tag))
+        tag.btn_ptxt.clicked.connect(lambda:self.f_btn_open_ptxt())
         tag.btn_pset.clicked.connect(lambda: self.f_btn_pset(tag))
         tag.btn_register.clicked.connect(lambda: self.f_btn_register(tag))
         tag.btn_savescreen.clicked.connect(lambda: self.f_btn_save_screen(tag))
         tag.btn_savelog.clicked.connect(lambda: self.f_btn_save_syslog(tag))
         tag.btn_savecfg.clicked.connect(lambda: self.f_btn_save_cfg(tag))
+
 
     def show_message(self, message, level=0):
         self.HlSignal.show_message.emit(message,level)
