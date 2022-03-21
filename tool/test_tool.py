@@ -1,4 +1,4 @@
-import webbrowser
+from webbrowser import open
 from datetime import datetime
 from os.path import abspath
 from urllib import parse
@@ -153,9 +153,8 @@ def save_xml_cfg(window,device):
 
 def open_web(device):
     url = "http://%s/" % device.ip
-    auth = (device.user, device.password)
     try:
-        webbrowser.open(url)
+        open(url)
         return True
     except Exception as err:
         print(err)

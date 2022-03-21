@@ -1,3 +1,4 @@
+import os
 from sys import argv,exit
 
 from PySide2.QtWidgets import QApplication

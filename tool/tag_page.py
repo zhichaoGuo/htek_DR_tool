@@ -30,6 +30,7 @@ class Tag:
             self.text_pnum = ui.D1_text_pnum
             self.text_pvalue = ui.D1_text_pvalue
             self.btn_pselect = ui.D1_btn_pselect
+            self.btn_ptxt = ui.D1_btn_ptxt
             self.btn_pset = ui.D1_btn_pset
             # 注册区
             self.box_register = ui.D1_box_register
@@ -64,6 +65,7 @@ class Tag:
             self.text_pnum = ui.D2_text_pnum
             self.text_pvalue = ui.D2_text_pvalue
             self.btn_pselect = ui.D2_btn_pselect
+            self.btn_ptxt = ui.D2_btn_ptxt
             self.btn_pset = ui.D2_btn_pset
             # 注册区
             self.box_register = ui.D2_box_register
@@ -97,6 +99,7 @@ class Tag:
             # P值区
             self.text_pnum = ui.D3_text_pnum
             self.text_pvalue = ui.D3_text_pvalue
+            self.btn_ptxt = ui.D3_btn_ptxt
             self.btn_pselect = ui.D3_btn_pselect
             self.btn_pset = ui.D3_btn_pset
             # 注册区
@@ -132,6 +135,7 @@ class Tag:
             self.text_pnum = ui.D4_text_pnum
             self.text_pvalue = ui.D4_text_pvalue
             self.btn_pselect = ui.D4_btn_pselect
+            self.btn_ptxt = ui.D4_btn_ptxt
             self.btn_pset = ui.D4_btn_pset
             # 注册区
             self.box_register = ui.D4_box_register
