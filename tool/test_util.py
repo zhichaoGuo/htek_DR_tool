@@ -84,33 +84,51 @@ def return_ip():
 
 
 def save_file(window, file_buf, model, file_methd):
-    pic_data = file_buf
-    file_name = '[' + str(datetime.now())[5:].replace(":", "·").replace("-", "").split(".")[0].replace(" ", "]")
-    file_name = file_name.split(']')[0] + f'][{model}]' + file_name.split(']')[1]
-    filePath = QFileDialog.getSaveFileName(window, '保存路径', f'{abspath(".")}\\screen\\{file_name}.{file_methd}',
-                                           f'.{file_methd}(*.{file_methd})')
     try:
-        with open(filePath[0], "wb") as f:
-            f.write(pic_data)
-        f.close()
-        window.show_message('保存%s文件成功' % file_methd)
-    except FileNotFoundError:
-        pass
+        file_name = '[' + str(datetime.now())[5:].replace(":", "·").replace("-", "").split(".")[0].replace(" ", "]")
+        file_name = file_name.split(']')[0] + f'][{model}]' + file_name.split(']')[1]
+        filePath = QFileDialog.getSaveFileName(window, '保存路径', f'{abspath(".")}\\screen\\{file_name}.{file_methd}',
+                                               f'.{file_methd}(*.{file_methd})')
+        try:
+            with open(filePath[0], "wb") as f:
+                f.write(file_buf)
+            f.close()
+            window.show_message('保存%s文件成功' % file_methd)
+        except FileNotFoundError:
+            window.show_message('取消保存%s文件' % file_methd)
+    except TypeError:
+        window.show_message('save_file:TypeError',1)
+        return False
 
-
-def loop_check_is_online(window,tag, timeout=50):
+def loop_check_is_online(window, tag, timeout=50, sleep_time=36):
     device = tag.device
-    sleep(36)
+    sleep(sleep_time)
     for i in range(timeout):
         sleep(4)
-        if isOnline(device.ip, device.user, device.password)==1:
+        if isOnline(device.ip, device.user, device.password) == 1:
             window.show_message('话机启动成功')
             tag.refresh_state()
             tag.connect_state(True)
-            return 1
+            return True
     print('still not online')
-    window.show_message('话机仍未成功',1)
+    window.show_message('话机仍未成功', 1)
     tag.clean_state()
     tag.connect_state(False)
     tag.lab_online.setText('<font color=red>█离线█</font>')
-    return -1
+    return False
+
+
+def check_device_alive(window, tag):
+    device = tag.device
+    state_code = isOnline(device.ip, device.user, device.password)
+    if state_code == 1:
+        tag.connect_state(True)
+        return True
+    elif state_code == 0:
+        tag.clean_state()
+        tag.connect_state(False)
+        window.show_message('话机密码有误', 1)
+    elif state_code == -1:
+        tag.clean_state()
+        tag.connect_state(False)
+        window.show_message('话机未响应', 1)

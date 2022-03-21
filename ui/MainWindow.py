@@ -3,13 +3,13 @@ from threading import Thread
 
 from yaml import safe_load
 from PySide2.QtWidgets import QMainWindow, QMessageBox
-from PySide2.QtCore import Slot, QCoreApplication,Qt
+from PySide2.QtCore import Slot, QCoreApplication, Qt
 
 from tool.HL_Signal import HlSignal
 from tool.hl_device import VoipDevice
 from tool.test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen, open_web, \
     save_syslog, save_xml_cfg
-from tool.test_util import isIPv4, hl_request, isOnline, return_ip, save_file, loop_check_is_online
+from tool.test_util import isIPv4, hl_request, isOnline, return_ip, save_file, loop_check_is_online, check_device_alive
 from ui.ui_main import Ui_MainWindow
 
 
@@ -41,8 +41,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.file = 'syslog'
         self.file_model = 'UC'
         self.file_methd = 'txt'
-        self.HlSignal.save_file.connect(
-            lambda: save_file(self,self.file,self.file_model,self.file_methd))
+        self.HlSignal.save_file.connect(lambda: save_file(self, self.file, self.file_model, self.file_methd))
         self.HlSignal.show_message.connect(self._show_message)
 
     def closeEvent(self, event) -> None:
@@ -70,12 +69,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                           tag.box_password.currentText().split(':')[1]) == 0:
                 tag.connect_state(False)
                 tag.lab_online.setText('<font color=red>█失败█</font>')
-                self.show_message('绑定失败：密码错误',1)
+                self.show_message('绑定失败：密码错误', 1)
             # 设备离线
             else:
                 tag.clean_state()
                 tag.connect_state(False)
-                self.show_message('绑定失败：设备无响应',1)
+                self.show_message('绑定失败：设备无响应', 1)
         # ip 不为IPV4
         else:
             self.tabWidget.setTabText(self.tabWidget.indexOf(tag.tab),
@@ -83,27 +82,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             tag.clean_state()
             tag.connect_state(False)
             QMessageBox.about(self, '登录提示', 'not ipv4')
-            self.show_message('绑定失败：输入ip格式错误',1)
+            self.show_message('绑定失败：输入ip格式错误', 1)
 
-    def f_btn_autotest(self, device):
+    def f_btn_autotest(self, tag):
         """执行 enable_autotest_api"""
+        device = tag.device
+        if check_device_alive(self, tag) is False:
+            self.show_message('auto test 失败: check_device_alive 失败', 1)
+            return False
         self.show_message('执行 auto test 中')
         url = 'http://%s/enable_autotest_api' % device.ip
         r = hl_request('GET', url, auth=(device.user, device.password))
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'enable_autotest失败')
-            self.HlSignal.show_message.emit('auto test 失败，返回码为 %s' % r.status_code,1)
+            self.show_message('auto test 失败:%s' % r.status_code, 1)
+            return False
         self.show_message('auto test 成功')
+        return True
 
-    def f_btn_telnet(self, device):
+    def f_btn_telnet(self, tag):
+        device = tag.device
         """执行 enable telnet 和 enable ftp"""
         self.show_message('执行 telnet 中')
-        self.f_btn_autotest(device)
+        self.f_btn_autotest(tag)
         url1 = 'http://%s/AutoTest&action=enabletelnet' % device.ip
         r = hl_request('GET', url1, auth=(device.user, device.password))
         if r.status_code != 200:
             QMessageBox.about(self, '登录提示', 'enable telnet失败')
-            self.show_message('telnet 失败',1)
+            self.show_message('telnet 失败', 1)
             return -1
         url2 = 'http://%s/AutoTest&action=enableftp' % device.ip
         r = hl_request('GET', url2, auth=(device.user, device.password))
@@ -123,7 +129,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.show_message('话机正在重启')
         tag.connect_state(False)
         tag.lab_online.setText('<font color=red>█重启█</font>')
-        thread = Thread(target=loop_check_is_online, args=[self,tag, ])
+        thread = Thread(target=loop_check_is_online, args=[self, tag, ])
         # 设置成守护线程
         thread.setDaemon(True)
         # 启动线程
@@ -132,7 +138,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def f_btn_factory(self, tag):
         device = tag.device
         """恢复出厂"""
-        self.f_btn_autotest(device)
+        if self.f_btn_autotest(tag) is False:
+            QMessageBox.about(self, '登录提示', 'reset factory失败: autotest 失败')
+            self.show_message('reset factory失败: autotest 失败', 1)
+            return False
         url = 'http://%s/Abyss/FactoryReset' % device.ip
         r = hl_request('GET', url, auth=(device.user, device.password))
         if r.status_code != 200:
@@ -175,7 +184,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 QMessageBox.about(self, '提示', 'P值设置失败')
 
     def f_btn_register(self, tag):
-        current_account = safe_load(open('register_date.yml', 'r', encoding='utf-8').read())[tag.box_register.currentText()]
+        current_account = safe_load(open('register_date.yml', 'r', encoding='utf-8').read())[
+            tag.box_register.currentText()]
         sip_server = current_account['sip_server']
         sip_user = current_account['sip_user']
         sip_password = current_account['sip_password']
@@ -200,7 +210,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def f_btn_save_syslog(self, tag):
         # 起新线程下载syslog
-        thread = Thread(target=save_syslog, args=[self,tag.device, ])
+        thread = Thread(target=save_syslog, args=[self, tag.device, ])
         # 设置成守护线程
         thread.setDaemon(True)
         # 启动线程
@@ -234,8 +244,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def _connect_signal(self, tag):
         tag.btn_band.clicked.connect(lambda: self.f_btn_band(tag))
-        tag.btn_autotest.clicked.connect(lambda: self.f_btn_autotest(tag.device))
-        tag.btn_telnet.clicked.connect(lambda: self.f_btn_telnet(tag.device))
+        tag.btn_autotest.clicked.connect(lambda: self.f_btn_autotest(tag))
+        tag.btn_telnet.clicked.connect(lambda: self.f_btn_telnet(tag))
         tag.btn_reboot.clicked.connect(lambda: self.f_btn_reboot(tag))
         tag.btn_factory.clicked.connect(lambda: self.f_btn_factory(tag))
         tag.btn_logserver.clicked.connect(lambda: self.f_btn_show_syslog(tag.device, tag.logserver_port))
@@ -248,12 +258,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_savecfg.clicked.connect(lambda: self.f_btn_save_cfg(tag))
 
     def show_message(self, message, level=0):
-        self.HlSignal.show_message.emit(message,level)
+        self.HlSignal.show_message.emit(message, level)
 
-    def _show_message(self,message, level=0):
+    def _show_message(self, message, level=0):
         if level == 1:
             self.label_9.setText(f'<font color=red>{message}</font>')
         else:
             self.label_9.setText(message)
-
-

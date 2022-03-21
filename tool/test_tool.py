@@ -5,7 +5,7 @@ from urllib import parse
 
 from PySide2.QtWidgets import QFileDialog
 
-from tool.test_util import hl_request, parsePhoneStatusXml
+from tool.test_util import hl_request, parsePhoneStatusXml, save_file
 
 
 def web_add_contacts(device, xmlfile_abs_path):
@@ -112,7 +112,7 @@ def save_screen(window,device):
             print('save screen fild :%s' % r.status_code)
             return -1
     except Exception as err:
-        print('save screen fild ')
+        print('save screen fild:%s'%err)
         return -1
     window.file = r.content
     window.file_model = device.model
