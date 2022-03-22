@@ -1,11 +1,10 @@
-from yaml import safe_load
-
-from tool.test_tool import query_pnum
+from tool.test_tool import query_pnum, set_all_btn
 from ui.MainWindow import MainWindow
 
 
 class Tag:
     def __init__(self, ui: MainWindow, tag_number):
+        from yaml import safe_load
         self.register_lock_flag = 0
         if tag_number == 1:
             # 页面分类
@@ -145,7 +144,7 @@ class Tag:
             self.btn_savecfg = ui.D4_btn_savecfg
         try:
             self.box_register.addItems(
-                list(safe_load(open('register_date1.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
+                list(safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
             self.register_lock_falg = 0
         except Exception:
             self.box_register.addItems(['请检查register_date.yml'])
@@ -153,7 +152,7 @@ class Tag:
 
     def connect_state(self,state):
         if state in [True,False]:
-            MainWindow.set_all_btn(self,state)
+            set_all_btn(self,state)
             if state is False:
                 self.lab_online.setText('<font color=red>█离线█</font>')
             else:

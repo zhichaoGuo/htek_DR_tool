@@ -1,15 +1,10 @@
-import os
-import sys
 from threading import Thread
-
-from yaml import safe_load
 from PySide2.QtWidgets import QMainWindow, QMessageBox
 from PySide2.QtCore import Slot, QCoreApplication, Qt
 
 from tool.HL_Signal import HlSignal
-from tool.hl_device import VoipDevice
 from tool.test_tool import set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen, open_web, \
-    save_syslog, save_xml_cfg
+    save_syslog, save_xml_cfg, set_all_btn
 from tool.test_util import isIPv4, hl_request, isOnline, return_ip, save_file, loop_check_is_online, check_device_alive
 from ui.ui_main import Ui_MainWindow
 
@@ -28,10 +23,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.D3 = Tag(self, 3)
         self.D4 = Tag(self, 4)
         # 按键加锁
-        self.set_all_btn(self.D1, False)
-        self.set_all_btn(self.D2, False)
-        self.set_all_btn(self.D3, False)
-        self.set_all_btn(self.D4, False)
+        set_all_btn(self.D1, False)
+        set_all_btn(self.D2, False)
+        set_all_btn(self.D3, False)
+        set_all_btn(self.D4, False)
         # 绑定按键回调函数
         self._connect_signal(self.D1)
         self._connect_signal(self.D2)
@@ -46,10 +41,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.HlSignal.show_message.connect(self._show_message)
 
     def closeEvent(self, event) -> None:
-        sys.exit(0)
+        from sys import exit
+        exit(0)
 
     @Slot()
     def f_btn_band(self, tag):
+        from tool.hl_device import VoipDevice
+        """绑定设备，并解锁功能按钮"""
         # 检查ip合法性
         if isIPv4(tag.text_ip.text()):
             # 检查设备是否在线
@@ -85,7 +83,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QMessageBox.about(self, '登录提示', 'not ipv4')
             self.show_message('绑定失败：输入ip格式错误', 1)
 
-    def f_btn_open_web(self,tag):
+    def f_btn_open_web(self, tag):
+        """打开话机网页（不带验证）"""
         if open_web(tag.device):
             self.show_message('打开网页成功！')
         else:
@@ -127,8 +126,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.show_message('telnet 成功')
 
     def f_btn_reboot(self, tag):
-        device = tag.device
         """重启话机"""
+        device = tag.device
         url = 'http://%s/rb_phone.htm' % device.ip
         r = hl_request('GET', url, auth=(device.user, device.password))
         if r.status_code != 200:
@@ -143,8 +142,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         thread.start()
 
     def f_btn_factory(self, tag):
-        device = tag.device
         """恢复出厂"""
+        device = tag.device
         if self.f_btn_autotest(tag) is False:
             QMessageBox.about(self, '登录提示', 'reset factory失败: autotest 失败')
             self.show_message('reset factory失败: autotest 失败', 1)
@@ -191,6 +190,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 QMessageBox.about(self, '提示', 'P值设置失败')
 
     def f_btn_register(self, tag):
+        """注册选中的注册信息"""
+        from yaml import safe_load
         current_account = safe_load(open('register_date.yml', 'r', encoding='utf-8').read())[
             tag.box_register.currentText()]
         sip_server = current_account['sip_server']
@@ -207,6 +208,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         set_pnums(tag.device, set_dic)
 
     def f_btn_save_screen(self, tag):
+        """保存截图"""
         # 起新线程下载syslog
         thread = Thread(target=save_screen, args=[self, tag.device, ])
         # 设置成守护线程
@@ -216,6 +218,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.show_message('正在保存截图')
 
     def f_btn_save_syslog(self, tag):
+        """保存话机日志"""
         # 起新线程下载syslog
         thread = Thread(target=save_syslog, args=[self, tag.device, ])
         # 设置成守护线程
@@ -225,6 +228,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.show_message('正在保存日志')
 
     def f_btn_save_cfg(self, tag):
+        """保存话机xml配置"""
         # 起新线程下载syslog
         thread = Thread(target=save_xml_cfg, args=[self, tag.device, ])
         # 设置成守护线程
@@ -234,31 +238,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.show_message('正在保存配置')
 
     def f_btn_open_ptxt(self):
-        os.system("notepad.exe P值表.txt")
+        """打开话机P值表"""
+        from os import system
+        system("notepad.exe P值表.txt")
 
-    @staticmethod
-    def set_all_btn(tag, value):
-        if value in [True, False]:
-            tag.btn_web.setEnabled(value)
-            tag.btn_autotest.setEnabled(value)
-            tag.btn_telnet.setEnabled(value)
-            tag.btn_reboot.setEnabled(value)
-            tag.btn_factory.setEnabled(value)
-            tag.btn_ap.setEnabled(value)
-            tag.btn_pselect.setEnabled(value)
-            tag.btn_pset.setEnabled(value)
-            tag.btn_logserver.setEnabled(value)
-            if tag.register_lock_flag == 1:
-                tag.btn_register.setEnabled(False)
-            else:
-                tag.btn_register.setEnabled(value)
-            tag.btn_savescreen.setEnabled(value)
-            tag.btn_savelog.setEnabled(value)
-            tag.btn_savecfg.setEnabled(value)
 
     def _connect_signal(self, tag):
         tag.btn_band.clicked.connect(lambda: self.f_btn_band(tag))
-        tag.btn_web.clicked.connect(lambda :self.f_btn_open_web(tag))
+        tag.btn_web.clicked.connect(lambda: self.f_btn_open_web(tag))
         tag.btn_autotest.clicked.connect(lambda: self.f_btn_autotest(tag))
         tag.btn_telnet.clicked.connect(lambda: self.f_btn_telnet(tag))
         tag.btn_reboot.clicked.connect(lambda: self.f_btn_reboot(tag))
@@ -266,13 +253,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_logserver.clicked.connect(lambda: self.f_btn_show_syslog(tag.device, tag.logserver_port))
         tag.btn_ap.clicked.connect(lambda: self.f_btn_ap(tag))
         tag.btn_pselect.clicked.connect(lambda: self.f_btn_pslect(tag))
-        tag.btn_ptxt.clicked.connect(lambda:self.f_btn_open_ptxt())
+        tag.btn_ptxt.clicked.connect(lambda: self.f_btn_open_ptxt())
         tag.btn_pset.clicked.connect(lambda: self.f_btn_pset(tag))
         tag.btn_register.clicked.connect(lambda: self.f_btn_register(tag))
         tag.btn_savescreen.clicked.connect(lambda: self.f_btn_save_screen(tag))
         tag.btn_savelog.clicked.connect(lambda: self.f_btn_save_syslog(tag))
         tag.btn_savecfg.clicked.connect(lambda: self.f_btn_save_cfg(tag))
-
 
     def show_message(self, message, level=0):
         self.HlSignal.show_message.emit(message, level)

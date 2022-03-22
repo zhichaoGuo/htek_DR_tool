@@ -99,7 +99,7 @@ def AutoProvisionNow(device):
     return True
 
 
-def save_screen(window,device):
+def save_screen(window, device):
     url = "http://%s/download_screen" % device.ip
     auth = (device.user, device.password)
     try:
@@ -108,30 +108,32 @@ def save_screen(window,device):
             print('save screen fild :%s' % r.status_code)
             return -1
     except Exception as err:
-        print('save screen fild:%s'%err)
+        print('save screen fild:%s' % err)
         return -1
     window.file = r.content
     window.file_model = device.model
     window.file_methd = 'bmp'
     window.HlSignal.save_file.emit(window, r.content, device.model, 'bmp')
 
-def save_syslog(window,device):
+
+def save_syslog(window, device):
     url = "http://%s/download_log" % device.ip
     auth = (device.user, device.password)
     try:
         r = hl_request('GET', url, auth=auth)
         if r.status_code != 200:
-            print('save sysylog fild :%s'% r.status_code)
+            print('save sysylog fild :%s' % r.status_code)
             return -1
     except Exception as err:
-        print('save sysylog fild ' )
+        print('save sysylog fild ')
         return -1
     window.file = r.content
     window.file_model = device.model
     window.file_methd = 'txt'
-    window.HlSignal.save_file.emit(window,window.file,window.file_model,window.file_methd)
+    window.HlSignal.save_file.emit(window, window.file, window.file_model, window.file_methd)
 
-def save_xml_cfg(window,device):
+
+def save_xml_cfg(window, device):
     url = "http://%s/download_xml_cfg" % device.ip
     auth = (device.user, device.password)
     try:
@@ -145,7 +147,8 @@ def save_xml_cfg(window,device):
     window.file = r.content
     window.file_model = device.model
     window.file_methd = 'xml'
-    window.HlSignal.save_file.emit(window,window.file,window.file_model,window.file_methd)
+    window.HlSignal.save_file.emit(window, window.file, window.file_model, window.file_methd)
+
 
 def open_web(device):
     url = "http://%s/" % device.ip
@@ -155,6 +158,26 @@ def open_web(device):
     except Exception as err:
         print(err)
         return False
+
+
+def set_all_btn(tag, value):
+    if value in [True, False]:
+        tag.btn_web.setEnabled(value)
+        tag.btn_autotest.setEnabled(value)
+        tag.btn_telnet.setEnabled(value)
+        tag.btn_reboot.setEnabled(value)
+        tag.btn_factory.setEnabled(value)
+        tag.btn_ap.setEnabled(value)
+        tag.btn_pselect.setEnabled(value)
+        tag.btn_pset.setEnabled(value)
+        tag.btn_logserver.setEnabled(value)
+        if tag.register_lock_flag == 1:
+            tag.btn_register.setEnabled(False)
+        else:
+            tag.btn_register.setEnabled(value)
+        tag.btn_savescreen.setEnabled(value)
+        tag.btn_savelog.setEnabled(value)
+        tag.btn_savecfg.setEnabled(value)
 
 
 if __name__ == '__main__':
