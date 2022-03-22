@@ -70,7 +70,7 @@
         <rect>
          <x>10</x>
          <y>80</y>
-         <width>161</width>
+         <width>131</width>
          <height>23</height>
         </rect>
        </property>
@@ -112,6 +112,19 @@
          <width>161</width>
          <height>22</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D1_btn_web">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>80</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>WEB</string>
        </property>
       </widget>
      </widget>
@@ -574,7 +587,7 @@
         <rect>
          <x>10</x>
          <y>80</y>
-         <width>161</width>
+         <width>131</width>
          <height>23</height>
         </rect>
        </property>
@@ -616,6 +629,19 @@
          <width>161</width>
          <height>22</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_web">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>80</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>WEB</string>
        </property>
       </widget>
      </widget>
@@ -1006,7 +1032,7 @@
         <rect>
          <x>10</x>
          <y>80</y>
-         <width>161</width>
+         <width>131</width>
          <height>23</height>
         </rect>
        </property>
@@ -1048,6 +1074,19 @@
          <width>161</width>
          <height>22</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D3_btn_web">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>80</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>WEB</string>
        </property>
       </widget>
      </widget>
@@ -1474,7 +1513,7 @@
         <rect>
          <x>10</x>
          <y>80</y>
-         <width>161</width>
+         <width>131</width>
          <height>23</height>
         </rect>
        </property>
@@ -1516,6 +1555,19 @@
          <width>161</width>
          <height>22</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D4_btn_web">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>80</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>WEB</string>
        </property>
       </widget>
      </widget>

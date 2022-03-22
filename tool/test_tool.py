@@ -1,11 +1,7 @@
 from webbrowser import open
-from datetime import datetime
-from os.path import abspath
 from urllib import parse
 
-from PySide2.QtWidgets import QFileDialog
-
-from tool.test_util import hl_request, parsePhoneStatusXml, save_file
+from tool.test_util import hl_request, parsePhoneStatusXml
 
 
 def web_add_contacts(device, xmlfile_abs_path):

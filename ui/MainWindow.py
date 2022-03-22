@@ -8,7 +8,7 @@ from PySide2.QtCore import Slot, QCoreApplication, Qt
 
 from tool.HL_Signal import HlSignal
 from tool.hl_device import VoipDevice
-from tool.test_tool import query_pnum, set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen, open_web, \
+from tool.test_tool import set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen, open_web, \
     save_syslog, save_xml_cfg
 from tool.test_util import isIPv4, hl_request, isOnline, return_ip, save_file, loop_check_is_online, check_device_alive
 from ui.ui_main import Ui_MainWindow
@@ -84,6 +84,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             tag.connect_state(False)
             QMessageBox.about(self, '登录提示', 'not ipv4')
             self.show_message('绑定失败：输入ip格式错误', 1)
+
+    def f_btn_open_web(self,tag):
+        if open_web(tag.device):
+            self.show_message('打开网页成功！')
+        else:
+            self.show_message('打开网页失败！', 1)
 
     def f_btn_autotest(self, tag):
         """执行 enable_autotest_api"""
@@ -233,6 +239,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     @staticmethod
     def set_all_btn(tag, value):
         if value in [True, False]:
+            tag.btn_web.setEnabled(value)
             tag.btn_autotest.setEnabled(value)
             tag.btn_telnet.setEnabled(value)
             tag.btn_reboot.setEnabled(value)
@@ -241,13 +248,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             tag.btn_pselect.setEnabled(value)
             tag.btn_pset.setEnabled(value)
             tag.btn_logserver.setEnabled(value)
-            tag.btn_register.setEnabled(value)
+            if tag.register_lock_flag == 1:
+                tag.btn_register.setEnabled(False)
+            else:
+                tag.btn_register.setEnabled(value)
             tag.btn_savescreen.setEnabled(value)
             tag.btn_savelog.setEnabled(value)
             tag.btn_savecfg.setEnabled(value)
 
     def _connect_signal(self, tag):
         tag.btn_band.clicked.connect(lambda: self.f_btn_band(tag))
+        tag.btn_web.clicked.connect(lambda :self.f_btn_open_web(tag))
         tag.btn_autotest.clicked.connect(lambda: self.f_btn_autotest(tag))
         tag.btn_telnet.clicked.connect(lambda: self.f_btn_telnet(tag))
         tag.btn_reboot.clicked.connect(lambda: self.f_btn_reboot(tag))

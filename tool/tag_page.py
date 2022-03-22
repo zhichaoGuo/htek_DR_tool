@@ -6,6 +6,7 @@ from ui.MainWindow import MainWindow
 
 class Tag:
     def __init__(self, ui: MainWindow, tag_number):
+        self.register_lock_flag = 0
         if tag_number == 1:
             # 页面分类
             self.tab = ui.tab
@@ -15,6 +16,7 @@ class Tag:
             self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
             self.btn_band = ui.D1_btn_band
             self.lab_online = ui.D1_lab_online
+            self.btn_web = ui.D1_btn_web
             # 功能区
             self.btn_autotest = ui.D1_btn_autotest
             self.btn_telnet = ui.D1_btn_telnet
@@ -34,8 +36,6 @@ class Tag:
             self.btn_pset = ui.D1_btn_pset
             # 注册区
             self.box_register = ui.D1_box_register
-            self.box_register.addItems(
-                list(safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
             self.btn_register = ui.D1_btn_register
             # 保存区
             self.btn_savescreen = ui.D1_btn_savescreen
@@ -50,6 +50,7 @@ class Tag:
             self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
             self.btn_band = ui.D2_btn_band
             self.lab_online = ui.D2_lab_online
+            self.btn_web = ui.D2_btn_web
             # 功能区
             self.btn_autotest = ui.D2_btn_autotest
             self.btn_telnet = ui.D2_btn_telnet
@@ -69,8 +70,6 @@ class Tag:
             self.btn_pset = ui.D2_btn_pset
             # 注册区
             self.box_register = ui.D2_box_register
-            self.box_register.addItems(
-                list(safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
             self.btn_register = ui.D2_btn_register
             # 保存区
             self.btn_savescreen = ui.D2_btn_savescreen
@@ -85,6 +84,7 @@ class Tag:
             self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
             self.btn_band = ui.D3_btn_band
             self.lab_online = ui.D3_lab_online
+            self.btn_web = ui.D3_btn_web
             # 功能区
             self.btn_autotest = ui.D3_btn_autotest
             self.btn_telnet = ui.D3_btn_telnet
@@ -104,8 +104,6 @@ class Tag:
             self.btn_pset = ui.D3_btn_pset
             # 注册区
             self.box_register = ui.D3_box_register
-            self.box_register.addItems(
-                list(safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
             self.btn_register = ui.D3_btn_register
             # 保存区
             self.btn_savescreen = ui.D3_btn_savescreen
@@ -120,6 +118,7 @@ class Tag:
             self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
             self.btn_band = ui.D4_btn_band
             self.lab_online = ui.D4_lab_online
+            self.btn_web = ui.D4_btn_web
             # 功能区
             self.btn_autotest = ui.D4_btn_autotest
             self.btn_telnet = ui.D4_btn_telnet
@@ -139,13 +138,18 @@ class Tag:
             self.btn_pset = ui.D4_btn_pset
             # 注册区
             self.box_register = ui.D4_box_register
-            self.box_register.addItems(
-                list(safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
             self.btn_register = ui.D4_btn_register
             # 保存区
             self.btn_savescreen = ui.D4_btn_savescreen
             self.btn_savelog = ui.D4_btn_savelog
             self.btn_savecfg = ui.D4_btn_savecfg
+        try:
+            self.box_register.addItems(
+                list(safe_load(open('register_date1.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
+            self.register_lock_falg = 0
+        except Exception:
+            self.box_register.addItems(['请检查register_date.yml'])
+            self.register_lock_flag = 1
 
     def connect_state(self,state):
         if state in [True,False]:
