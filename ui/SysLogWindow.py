@@ -19,7 +19,7 @@ class SyslogWindow(QtWidgets.QMainWindow):
         self.s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
         self.s.setblocking(True)
         self.s.bind((return_ip(), port))
-        # 创建线程用于自动回应注册包
+        # 创建线程
         thread = Thread(target=self.child_thread, args=[self.s, ])
         # 设置成守护线程
         thread.setDaemon(True)

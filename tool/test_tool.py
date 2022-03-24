@@ -28,7 +28,7 @@ def set_pnum(device, pnum: str, value):
     try:
         data = parse.urlencode({pnum: value}).encode(encoding="utf-8")
 
-        req = hl_request('POST', url, headers=headers, data=data, auth=auth)
+        req = hl_request('POST', url, headers=headers, data=data, auth=auth, timeout=1)
         if req.status_code == 200:
             return True
         else:
@@ -45,7 +45,7 @@ def set_pnums(device, dic):
     try:
         data = parse.urlencode(dic).encode(encoding="utf-8")
 
-        req = hl_request('POST', url, headers=headers, data=data, auth=auth)
+        req = hl_request('POST', url, headers=headers, data=data, auth=auth, timeout=1)
         if req.status_code == 200:
             return True
         else:
@@ -60,7 +60,7 @@ def query_pnum(device, pnum: str):
     url = "http://%s/Abyss/GetPhoneStatus?P=%s" % (device.ip, pnum)
     auth = (device.user, device.password)
     try:
-        req = hl_request('GET', url, auth=auth)
+        req = hl_request('GET', url, auth=auth, timeout=1)
         if req.status_code == 200:
             return parsePhoneStatusXml(req.text)[pnum]
         else:
@@ -74,13 +74,14 @@ def skip_rom_check(device):
     url = "http://%s/skip_rom_check" % device.ip
     auth = (device.user, device.password)
     try:
-        req = hl_request('GET', url, auth=auth)
+        req = hl_request('GET', url, auth=auth, timeout=1)
         if req.status_code == 200:
             return True
+        else:
+            return False
     except Exception as err:
         print("skip_rom_check err:", err)
         return False
-    return True
 
 
 def AutoProvisionNow(device):
@@ -90,13 +91,14 @@ def AutoProvisionNow(device):
     auth = (device.user, device.password)
     try:
         data = parse.urlencode(pValues).encode(encoding="utf-8")
-        req = hl_request('POST', url, headers=headers, data=data, auth=auth)
+        req = hl_request('POST', url, headers=headers, data=data, auth=auth, timeout=1)
         if req.status_code == 200:
             return True
+        else:
+            return False
     except Exception as err:
         print("AutoProvisionNow err:", err)
         return False
-    return True
 
 
 def save_screen(window, device):

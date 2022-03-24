@@ -91,75 +91,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.show_message('打开网页失败！', 1)
 
     def f_btn_autotest(self, tag):
-        """执行 enable_autotest_api"""
-        device = tag.device
-        if check_device_alive(self, tag) is False:
-            self.show_message('auto test 失败: check_device_alive 失败', 1)
-            return False
-        self.show_message('执行 auto test 中')
-        url = 'http://%s/enable_autotest_api' % device.ip
-        r = hl_request('GET', url, auth=(device.user, device.password))
-        if r.status_code != 200:
-            QMessageBox.about(self, '登录提示', 'enable_autotest失败')
-            self.show_message('auto test 失败:%s' % r.status_code, 1)
-            return False
-        self.show_message('auto test 成功')
-        return True
+        thread = Thread(target=tag.exec_autotest, args=[self, ])
+        thread.setDaemon(True)
+        thread.start()
+        self.show_message('正在autotest')
 
     def f_btn_telnet(self, tag):
-        device = tag.device
-        """执行 enable telnet 和 enable ftp"""
-        self.show_message('执行 telnet 中')
-        self.f_btn_autotest(tag)
-        url1 = 'http://%s/AutoTest&action=enabletelnet' % device.ip
-        r = hl_request('GET', url1, auth=(device.user, device.password))
-        if r.status_code != 200:
-            QMessageBox.about(self, '登录提示', 'enable telnet失败')
-            self.show_message('telnet 失败', 1)
-            return -1
-        url2 = 'http://%s/AutoTest&action=enableftp' % device.ip
-        r = hl_request('GET', url2, auth=(device.user, device.password))
-        if r.status_code != 200:
-            QMessageBox.about(self, '登录提示', 'enable ftp失败')
-            self.show_message('ftp 失败', 1)
-            return -1
-        self.show_message('telnet 成功')
+        thread = Thread(target=tag.exec_telnet, args=[self, ])
+        thread.setDaemon(True)
+        thread.start()
+        self.show_message('正在telnet')
 
     def f_btn_reboot(self, tag):
-        """重启话机"""
-        device = tag.device
-        url = 'http://%s/rb_phone.htm' % device.ip
-        r = hl_request('GET', url, auth=(device.user, device.password))
-        if r.status_code != 200:
-            QMessageBox.about(self, '登录提示', 'reboot失败')
-        self.show_message('话机正在重启')
-        tag.connect_state(False)
-        tag.lab_online.setText('<font color=red>█重启█</font>')
-        thread = Thread(target=loop_check_is_online, args=[self, tag, ])
-        # 设置成守护线程
+        thread = Thread(target=tag.exec_reboot, args=[self, ])
         thread.setDaemon(True)
-        # 启动线程
         thread.start()
+        self.show_message('正在reboot')
 
     def f_btn_factory(self, tag):
-        """恢复出厂"""
-        device = tag.device
-        if self.f_btn_autotest(tag) is False:
-            QMessageBox.about(self, '登录提示', 'reset factory失败: autotest 失败')
-            self.show_message('reset factory失败: autotest 失败', 1)
-            return False
-        url = 'http://%s/Abyss/FactoryReset' % device.ip
-        r = hl_request('GET', url, auth=(device.user, device.password))
-        if r.status_code != 200:
-            QMessageBox.about(self, '登录提示', 'reset factory失败')
-        self.show_message('话机正在重启')
-        tag.connect_state(False)
-        tag.lab_online.setText('<font color=red>█重启█</font>')
-        thread = Thread(target=loop_check_is_online, args=[self, tag, ])
-        # 设置成守护线程
+        thread = Thread(target=tag.exec_factory, args=[self, ])
         thread.setDaemon(True)
-        # 启动线程
         thread.start()
+        self.show_message('正在恢复出厂')
 
     def f_btn_show_syslog(self, device, port: int):
         """打开syslog服务器并展示界面"""
@@ -171,14 +124,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.syslogwindow.show()
 
     def f_btn_ap(self, tag):
-        """设置fw和cfg地址并执行skip rom check"""
-        skip_rom_check(tag.device)
-        set_pnum(tag.device, 'P192', tag.text_fw.text())
-        set_pnum(tag.device, 'P237', tag.text_cfg.text())
-        AutoProvisionNow(tag.device)
+        thread = Thread(target=tag.exec_ap, args=[self, ])
+        thread.setDaemon(True)
+        thread.start()
+        self.show_message('正在ap')
 
     def f_btn_pslect(self, tag):
-        tag.refresh_state()
+        thread = Thread(target=tag.exec_select_p, args=[self, ])
+        thread.setDaemon(True)
+        thread.start()
+        self.show_message('正在slect P值')
 
     def f_btn_pset(self, tag):
         if tag.text_pnum.text() == '':
@@ -186,7 +141,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             ret = set_pnum(tag.device, 'P' + tag.text_pnum.text(), tag.text_pvalue.text())
             tag.refresh_state()
-            if not ret:
+            if ret is False:
                 QMessageBox.about(self, '提示', 'P值设置失败')
 
     def f_btn_register(self, tag):

@@ -1,4 +1,7 @@
-from tool.test_tool import query_pnum, set_all_btn
+from threading import Thread
+
+from tool.test_tool import query_pnum, set_all_btn, skip_rom_check, set_pnum, AutoProvisionNow
+from tool.test_util import check_device_alive, hl_request, loop_check_is_online
 from ui.MainWindow import MainWindow
 
 
@@ -150,9 +153,9 @@ class Tag:
             self.box_register.addItems(['请检查register_date.yml'])
             self.register_lock_flag = 1
 
-    def connect_state(self,state):
-        if state in [True,False]:
-            set_all_btn(self,state)
+    def connect_state(self, state):
+        if state in [True, False]:
+            set_all_btn(self, state)
             if state is False:
                 self.lab_online.setText('<font color=red>█离线█</font>')
             else:
@@ -161,14 +164,116 @@ class Tag:
             print('connect state fail')
 
     def refresh_state(self):
-        self.text_fw.setText(query_pnum(self.device, '192'))
-        self.text_cfg.setText(query_pnum(self.device, '237'))
-        if self.text_pnum.text() == '':
-            self.text_pvalue.setText('')
-        else:
-            self.text_pvalue.setText(query_pnum(self.device, str(self.text_pnum.text())))
+        try:
+            self.text_fw.setText(query_pnum(self.device, '192'))
+            self.text_cfg.setText(query_pnum(self.device, '237'))
+            if self.text_pnum.text() == '':
+                self.text_pvalue.setText('')
+            else:
+                self.text_pvalue.setText(query_pnum(self.device, str(self.text_pnum.text())))
+            return True
+        except Exception:
+            return False
 
     def clean_state(self):
         self.text_fw.setText('')
         self.text_cfg.setText('')
         self.text_pvalue.setText('')
+
+    def exec_autotest(self, window):
+        """执行 enable_autotest_api"""
+        device = self.device
+        if check_device_alive(window, self) is False:
+            window.show_message('auto test 失败: check_device_alive 失败', 1)
+            return False
+        window.show_message('执行 auto test 中')
+        url = 'http://%s/enable_autotest_api' % device.ip
+        r = hl_request('GET', url, auth=(device.user, device.password), timeout=1)
+        if r.status_code != 200:
+            window.show_message('auto test 失败:%s' % r.status_code, 1)
+            return False
+        window.show_message('auto test 成功')
+        return True
+
+    def exec_telnet(self, window):
+        device = self.device
+        """执行 enable telnet 和 enable ftp"""
+        window.show_message('执行 telnet 中')
+        if self.exec_autotest(window) is False:
+            window.show_message('telnet 失败:auto test 失败', 1)
+            return False
+        url1 = 'http://%s/AutoTest&action=enabletelnet' % device.ip
+        r = hl_request('GET', url1, auth=(device.user, device.password), timeout=1)
+        if r.status_code != 200:
+            window.show_message('telnet 失败:%s' % r.status_code, 1)
+            return False
+        url2 = 'http://%s/AutoTest&action=enableftp' % device.ip
+        r = hl_request('GET', url2, auth=(device.user, device.password), timeout=1)
+        if r.status_code != 200:
+            window.show_message('ftp 失败:%s' % r.status_code, 1)
+            return False
+        window.show_message('telnet 成功')
+        return True
+
+    def exec_reboot(self, window):
+        """重启话机"""
+        device = self.device
+        url = 'http://%s/rb_phone.htm' % device.ip
+        r = hl_request('GET', url, auth=(device.user, device.password), timeout=1)
+        if r.status_code != 200:
+            window.show_message('话机重启失败：%s' % r.status_code, 1)
+            return False
+        window.show_message('话机正在重启')
+        self.connect_state(False)
+        self.lab_online.setText('<font color=red>█重启█</font>')
+        temp = loop_check_is_online(self)
+        if temp is True:
+            window.show_message('话机启动成功')
+            return True
+        else:
+            window.show_message('话机仍未成功', 1)
+            return False
+
+    def exec_factory(self, window):
+        """恢复出厂"""
+        device = self.device
+        if self.exec_autotest(window) is False:
+            window.show_message('话机恢复出厂失败:autotest 失败', 1)
+            window.show_message('reset factory失败: autotest 失败', 1)
+            return False
+        url = 'http://%s/Abyss/FactoryReset' % device.ip
+        r = hl_request('GET', url, auth=(device.user, device.password), timeout=1)
+        if r.status_code != 200:
+            window.show_message('话机恢复出厂失败:%s' % r.status_code, 1)
+            return False
+        window.show_message('话机正在重启')
+        self.connect_state(False)
+        self.lab_online.setText('<font color=red>█重启█</font>')
+        temp = loop_check_is_online(self)
+        if temp is True:
+            window.show_message('话机启动成功')
+            return True
+        else:
+            window.show_message('话机仍未成功', 1)
+            return False
+
+    def exec_ap(self, window):
+        """设置fw和cfg地址并执行skip rom check"""
+        if skip_rom_check(self.device) is False:
+            window.show_message('ap失败：skip_rom_check失败', 1)
+            return False
+        set_pnum(self.device, 'P192', self.text_fw.text())
+        set_pnum(self.device, 'P237', self.text_cfg.text())
+        if AutoProvisionNow(self.device) is False:
+            window.show_message('ap失败：AutoProvisionNow失败', 1)
+            return False
+        window.show_message('ap成功！')
+        return True
+
+    def exec_select_p(self,window):
+        if self.refresh_state() is False:
+            window.show_message('P值查询失败',1)
+            return False
+        window.show_message('P值查询成功')
+        return True
+

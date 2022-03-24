@@ -9,11 +9,17 @@ from PySide2.QtWidgets import QFileDialog
 
 
 def hl_request(method, url, **kwargs):
-    print('send %s request to %s' % (method, url))
-    req = requests.request(method, url, **kwargs)
-    if req.status_code == 401:
+    try:
+        print('send %s request to %s' % (method, url))
         req = requests.request(method, url, **kwargs)
-    return req
+        if req.status_code == 401:
+            req = requests.request(method, url, **kwargs)
+        return req
+    except:
+        class fail:
+            status_code = 'request 错误'
+        req = fail()
+        return req
 
 
 def isIPv4(ip_str):
@@ -100,18 +106,16 @@ def save_file(window, file_buf, model, file_methd):
         window.show_message('save_file:TypeError',1)
         return False
 
-def loop_check_is_online(window, tag, timeout=50, sleep_time=36):
+def loop_check_is_online(tag, timeout=50, sleep_time=36):
     device = tag.device
     sleep(sleep_time)
     for i in range(timeout):
         sleep(4)
         if isOnline(device.ip, device.user, device.password) == 1:
-            window.show_message('话机启动成功')
             tag.refresh_state()
             tag.connect_state(True)
             return True
     print('still not online')
-    window.show_message('话机仍未成功', 1)
     tag.clean_state()
     tag.connect_state(False)
     tag.lab_online.setText('<font color=red>█离线█</font>')
@@ -128,7 +132,7 @@ def check_device_alive(window, tag):
         tag.clean_state()
         tag.connect_state(False)
         window.show_message('话机密码有误', 1)
-    elif state_code == -1:
+    elif state_code == 2:
         tag.clean_state()
         tag.connect_state(False)
         window.show_message('话机未响应', 1)
