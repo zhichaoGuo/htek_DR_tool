@@ -1,7 +1,8 @@
-from webbrowser import open
+import time
+from webbrowser import open as open_page
 from urllib import parse
 
-from tool.test_util import hl_request, parsePhoneStatusXml
+from tool.test_util import hl_request, parsePhoneStatusXml, loop_check_is_online
 
 
 def web_add_contacts(device, xmlfile_abs_path):
@@ -155,7 +156,7 @@ def save_xml_cfg(window, device):
 def open_web(device):
     url = "http://%s/" % device.ip
     try:
-        open(url)
+        open_page(url)
         return True
     except Exception as err:
         print(err)
@@ -183,6 +184,44 @@ def set_all_btn(tag, value):
         tag.btn_savelog.setEnabled(value)
         tag.btn_savecfg.setEnabled(value)
 
+
+def WebImportRom(window,tag,rom_abs_path:str):
+    rom_abs_path=rom_abs_path.replace('\\','\\\\')
+    device = tag.device
+    skip_rom_check = 'http://%s/skip_rom_check' % device.ip
+    url = 'http://%s/upgrade_upload' % device.ip
+    auth = (device.user, device.password)
+    files = {'file': open(rom_abs_path, 'rb')}
+    r = hl_request('get',skip_rom_check,auth=auth)
+    if r.status_code != 200 :
+        print('send request to skip rom check fail :%s' % r.status_code)
+        window.show_message('导入rom失败：skip rom check fail',1)
+        set_all_btn(tag,True)
+        return False
+    try:
+        r = hl_request('POST',url,auth=auth,files=files)
+        if r.status_code == 401:
+            print('send request to upgrade return code is 401 , try again')
+            r = hl_request('POST', url, auth=auth, files=files)
+            if r.status_code != 200:
+                window.show_message('导入rom失败：两次导入均失败',1)
+                set_all_btn(tag,True)
+                return False
+        window.show_message('导入rom成功！正在升级')
+    except Exception as err:
+        print('导入rom失败 :%s' % err)
+        set_all_btn(tag,True)
+        return False
+    tag.lab_online.setText('<font color=red>█升级█</font>')
+    time.sleep(100)
+    temp = loop_check_is_online(tag)
+    if temp is True:
+        window.show_message('话机启动成功')
+        set_all_btn(tag, True)
+        return True
+    else:
+        window.show_message('话机仍未成功', 1)
+        return False
 
 if __name__ == '__main__':
     pass

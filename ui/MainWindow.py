@@ -1,10 +1,10 @@
 from threading import Thread
-from PySide2.QtWidgets import QMainWindow, QMessageBox
+from PySide2.QtWidgets import QMainWindow, QMessageBox, QFileDialog
 from PySide2.QtCore import Slot, QCoreApplication, Qt
 
 from tool.HL_Signal import HlSignal
 from tool.test_tool import set_pnum, set_pnums, save_screen, open_web, \
-    save_syslog, save_xml_cfg, set_all_btn
+    save_syslog, save_xml_cfg, set_all_btn, WebImportRom
 from tool.test_util import isIPv4, isOnline, return_ip, save_file
 from ui.ui_main import Ui_MainWindow
 
@@ -124,7 +124,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.syslogwindow.show()
 
     def f_btn_inport_rom(self,tag):
-        pass
+        from os.path import abspath
+        set_all_btn(tag,False)
+        rom_abspath = QFileDialog.getOpenFileName(self,'打开导入的rom',abspath('.'),'.rom(*.rom)')
+        print(rom_abspath)
+        thread = Thread(target=WebImportRom, args=[self,tag,rom_abspath[0], ])
+        thread.setDaemon(True)
+        thread.start()
+        self.show_message('正在导入rom')
 
     def f_btn_inport_cfg(self,tag):
         pass
