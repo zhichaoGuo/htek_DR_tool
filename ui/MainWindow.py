@@ -123,6 +123,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.syslogwindow = SyslogWindow(device, port)
         self.syslogwindow.show()
 
+    def f_btn_inport_rom(self,tag):
+        pass
+
+    def f_btn_inport_cfg(self,tag):
+        pass
+
     def f_btn_ap(self, tag):
         thread = Thread(target=tag.exec_ap, args=[self, ])
         thread.setDaemon(True)
@@ -208,6 +214,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_reboot.clicked.connect(lambda: self.f_btn_reboot(tag))
         tag.btn_factory.clicked.connect(lambda: self.f_btn_factory(tag))
         tag.btn_logserver.clicked.connect(lambda: self.f_btn_show_syslog(tag.device, tag.logserver_port))
+        tag.btn_inport_rom.clicked.connect(lambda: self.f_btn_inport_rom(tag))
+        tag.btn_inport_cfg.clicked.connect(lambda: self.f_btn_inport_cfg(tag))
         tag.btn_ap.clicked.connect(lambda: self.f_btn_ap(tag))
         tag.btn_pselect.clicked.connect(lambda: self.f_btn_pslect(tag))
         tag.btn_ptxt.clicked.connect(lambda: self.f_btn_open_ptxt())

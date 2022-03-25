@@ -63,6 +63,19 @@
      <string>全部保存</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="syslog_btn_open_in_txt">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>400</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>在TXT中打开</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

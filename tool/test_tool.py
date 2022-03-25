@@ -169,6 +169,8 @@ def set_all_btn(tag, value):
         tag.btn_telnet.setEnabled(value)
         tag.btn_reboot.setEnabled(value)
         tag.btn_factory.setEnabled(value)
+        tag.btn_inport_rom.setEnabled(value)
+        tag.btn_inport_cfg.setEnabled(value)
         tag.btn_ap.setEnabled(value)
         tag.btn_pselect.setEnabled(value)
         tag.btn_pset.setEnabled(value)

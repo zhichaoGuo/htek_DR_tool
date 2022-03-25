@@ -32,6 +32,9 @@ class Ui_SyslogWindow(object):
         self.syslog_btn_save = QPushButton(self.centralwidget)
         self.syslog_btn_save.setObjectName(u"syslog_btn_save")
         self.syslog_btn_save.setGeometry(QRect(390, 400, 75, 23))
+        self.syslog_btn_open_in_txt = QPushButton(self.centralwidget)
+        self.syslog_btn_open_in_txt.setObjectName(u"syslog_btn_open_in_txt")
+        self.syslog_btn_open_in_txt.setGeometry(QRect(510, 400, 75, 23))
         SyslogWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(SyslogWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -47,5 +50,6 @@ class Ui_SyslogWindow(object):
         self.syslog_lab.setText(QCoreApplication.translate("SyslogWindow", u"TextLabel", None))
         self.syslog_btn_copy.setText(QCoreApplication.translate("SyslogWindow", u"\u5168\u90e8\u590d\u5236", None))
         self.syslog_btn_save.setText(QCoreApplication.translate("SyslogWindow", u"\u5168\u90e8\u4fdd\u5b58", None))
+        self.syslog_btn_open_in_txt.setText(QCoreApplication.translate("SyslogWindow", u"\u5728TXT\u4e2d\u6253\u5f00", None))
     # retranslateUi
 

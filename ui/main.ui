@@ -293,30 +293,59 @@
       <widget class="QLabel" name="label_4">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>40</x>
          <y>20</y>
-         <width>54</width>
-         <height>12</height>
+         <width>21</width>
+         <height>23</height>
         </rect>
        </property>
        <property name="text">
-        <string>fw路径</string>
+        <string>ROM</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_5">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>40</x>
          <y>50</y>
-         <width>54</width>
-         <height>12</height>
+         <width>21</width>
+         <height>23</height>
         </rect>
        </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
        <property name="text">
-        <string>cfg路径</string>
+        <string>CFG</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D1_btn_inport_rom">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>导入</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D1_btn_inport_cfg">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>导入</string>
        </property>
       </widget>
      </widget>
@@ -807,33 +836,62 @@
         </rect>
        </property>
       </widget>
-      <widget class="QLabel" name="label_13">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>54</width>
-         <height>12</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>fw路径</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_14">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>40</x>
+         <y>20</y>
+         <width>21</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>ROM</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_13">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
          <y>50</y>
-         <width>54</width>
-         <height>12</height>
+         <width>21</width>
+         <height>23</height>
         </rect>
        </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
        <property name="text">
-        <string>cfg路径</string>
+        <string>CFG</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_inport_cfg">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>导入</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_inport_rom">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>导入</string>
        </property>
       </widget>
      </widget>
@@ -1135,33 +1193,62 @@
         </rect>
        </property>
       </widget>
-      <widget class="QLabel" name="label_7">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>54</width>
-         <height>12</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>fw路径</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_8">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>40</x>
+         <y>20</y>
+         <width>21</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>ROM</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
          <y>50</y>
-         <width>54</width>
-         <height>12</height>
+         <width>21</width>
+         <height>23</height>
         </rect>
        </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
        <property name="text">
-        <string>cfg路径</string>
+        <string>CFG</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D3_btn_inport_cfg">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>导入</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D3_btn_inport_rom">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>导入</string>
        </property>
       </widget>
      </widget>
@@ -1616,33 +1703,62 @@
         </rect>
        </property>
       </widget>
-      <widget class="QLabel" name="label_18">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>54</width>
-         <height>12</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>fw路径</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_19">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>40</x>
+         <y>20</y>
+         <width>21</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>ROM</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_18">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
          <y>50</y>
-         <width>54</width>
-         <height>12</height>
+         <width>21</width>
+         <height>23</height>
         </rect>
        </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
        <property name="text">
-        <string>cfg路径</string>
+        <string>CFG</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D4_btn_inport_cfg">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>导入</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D4_btn_inport_rom">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>31</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>导入</string>
        </property>
       </widget>
      </widget>

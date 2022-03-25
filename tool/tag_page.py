@@ -25,6 +25,8 @@ class Tag:
             self.btn_logserver = ui.D1_btn_logserver
             self.logserver_port = 5191
             # 指派区
+            self.btn_inport_rom = ui.D1_btn_inport_rom
+            self.btn_inport_cfg = ui.D1_btn_inport_cfg
             self.text_fw = ui.D1_text_fw
             self.text_cfg = ui.D1_text_cfg
             self.btn_ap = ui.D1_btn_ap
@@ -59,6 +61,8 @@ class Tag:
             self.btn_logserver = ui.D2_btn_logserver
             self.logserver_port = 5192
             # 指派区
+            self.btn_inport_rom = ui.D2_btn_inport_rom
+            self.btn_inport_cfg = ui.D2_btn_inport_cfg
             self.text_fw = ui.D2_text_fw
             self.text_cfg = ui.D2_text_cfg
             self.btn_ap = ui.D2_btn_ap
@@ -93,6 +97,8 @@ class Tag:
             self.btn_logserver = ui.D3_btn_logserver
             self.logserver_port = 5193
             # 指派区
+            self.btn_inport_rom = ui.D3_btn_inport_rom
+            self.btn_inport_cfg = ui.D3_btn_inport_cfg
             self.text_fw = ui.D3_text_fw
             self.text_cfg = ui.D3_text_cfg
             self.btn_ap = ui.D3_btn_ap
@@ -127,6 +133,8 @@ class Tag:
             self.btn_logserver = ui.D4_btn_logserver
             self.logserver_port = 5194
             # 指派区
+            self.btn_inport_rom = ui.D4_btn_inport_rom
+            self.btn_inport_cfg = ui.D4_btn_inport_cfg
             self.text_fw = ui.D4_text_fw
             self.text_cfg = ui.D4_text_cfg
             self.btn_ap = ui.D4_btn_ap
