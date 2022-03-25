@@ -24,6 +24,7 @@ class Tag:
             self.btn_factory = ui.D1_btn_factory
             self.btn_logserver = ui.D1_btn_logserver
             self.logserver_port = 5191
+            self.btn_calllog = ui.D1_btn_calllog
             # 指派区
             self.btn_inport_rom = ui.D1_btn_inport_rom
             self.btn_inport_cfg = ui.D1_btn_inport_cfg
@@ -60,6 +61,7 @@ class Tag:
             self.btn_factory = ui.D2_btn_factory
             self.btn_logserver = ui.D2_btn_logserver
             self.logserver_port = 5192
+            self.btn_calllog = ui.D2_btn_calllog
             # 指派区
             self.btn_inport_rom = ui.D2_btn_inport_rom
             self.btn_inport_cfg = ui.D2_btn_inport_cfg
@@ -96,6 +98,7 @@ class Tag:
             self.btn_factory = ui.D3_btn_factory
             self.btn_logserver = ui.D3_btn_logserver
             self.logserver_port = 5193
+            self.btn_calllog = ui.D3_btn_calllog
             # 指派区
             self.btn_inport_rom = ui.D3_btn_inport_rom
             self.btn_inport_cfg = ui.D3_btn_inport_cfg
@@ -132,6 +135,7 @@ class Tag:
             self.btn_factory = ui.D4_btn_factory
             self.btn_logserver = ui.D4_btn_logserver
             self.logserver_port = 5194
+            self.btn_calllog = ui.D4_btn_calllog
             # 指派区
             self.btn_inport_rom = ui.D4_btn_inport_rom
             self.btn_inport_cfg = ui.D4_btn_inport_cfg

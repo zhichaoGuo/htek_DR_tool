@@ -123,11 +123,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.syslogwindow = SyslogWindow(device, port)
         self.syslogwindow.show()
 
+    def f_btn_show_calllog(self,tag):
+        """打开calllog界面"""
+        from ui.CallLogWindow import CallLogWindow
+        device = tag.device
+        tag.calllogwindiw = CallLogWindow(device)
+        tag.calllogwindiw.show()
+
     def f_btn_inport_rom(self,tag):
         from os.path import abspath
         set_all_btn(tag,False)
         rom_abspath = QFileDialog.getOpenFileName(self,'打开导入的rom',abspath('.'),'.rom(*.rom)')
-        print(rom_abspath)
         thread = Thread(target=WebImportRom, args=[self,tag,rom_abspath[0], ])
         thread.setDaemon(True)
         thread.start()

@@ -218,7 +218,7 @@
         <string>待开发</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="D1_btn_6">
+      <widget class="QPushButton" name="D1_btn_calllog">
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -228,7 +228,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>待开发</string>
+        <string>通话记录</string>
        </property>
       </widget>
       <widget class="QPushButton" name="D1_btn_8">
@@ -764,7 +764,7 @@
         <string>待开发</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_17">
+      <widget class="QPushButton" name="D2_btn_calllog">
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -774,7 +774,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>待开发</string>
+        <string>通话记录</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_18">
@@ -1394,7 +1394,7 @@
         <string>待开发</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_6">
+      <widget class="QPushButton" name="D3_btn_calllog">
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -1404,7 +1404,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>待开发</string>
+        <string>通话记录</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_7">
@@ -1904,7 +1904,7 @@
         <string>待开发</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_9">
+      <widget class="QPushButton" name="D4_btn_calllog">
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -1914,7 +1914,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>待开发</string>
+        <string>通话记录</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_10">
