@@ -1,5 +1,3 @@
-from threading import Thread
-
 from tool.test_tool import query_pnum, set_all_btn, skip_rom_check, set_pnum, AutoProvisionNow
 from tool.test_util import check_device_alive, hl_request, loop_check_is_online
 from ui.MainWindow import MainWindow

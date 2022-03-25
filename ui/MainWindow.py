@@ -3,9 +3,9 @@ from PySide2.QtWidgets import QMainWindow, QMessageBox
 from PySide2.QtCore import Slot, QCoreApplication, Qt
 
 from tool.HL_Signal import HlSignal
-from tool.test_tool import set_pnum, AutoProvisionNow, skip_rom_check, set_pnums, save_screen, open_web, \
+from tool.test_tool import set_pnum, set_pnums, save_screen, open_web, \
     save_syslog, save_xml_cfg, set_all_btn
-from tool.test_util import isIPv4, hl_request, isOnline, return_ip, save_file, loop_check_is_online, check_device_alive
+from tool.test_util import isIPv4, isOnline, return_ip, save_file
 from ui.ui_main import Ui_MainWindow
 
 
@@ -195,7 +195,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def f_btn_open_ptxt(self):
         """打开话机P值表"""
         from os import system
-        system("notepad.exe P值表.txt")
+        thread = Thread(target=system, args=["notepad.exe P值表.txt", ])
+        thread.setDaemon(True)
+        thread.start()
 
 
     def _connect_signal(self, tag):

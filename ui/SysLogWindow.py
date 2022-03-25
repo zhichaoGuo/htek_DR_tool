@@ -1,3 +1,5 @@
+from datetime import datetime
+from os.path import abspath, join
 from socket import socket,AF_INET,SOCK_DGRAM,SOL_SOCKET,SO_REUSEADDR
 from threading import Thread
 
@@ -39,6 +41,26 @@ class SyslogWindow(QtWidgets.QMainWindow):
 
     def update_sysylog(self, text: str):
         self.ui.syslog_text.append(text)
+
+    def f_btn_open_in_notepad(self,file_buf):
+        try:
+            file_name = '[' + str(datetime.now())[5:].replace(":", "·").replace("-", "").split(".")[0].replace(" ", "]")
+            file_name = file_name.split(']')[0] + f'][{self.device.model}]' + file_name.split(']')[1]
+            filePath = abspath(".")
+            file_abs_path = join(filePath,file_name)
+            try:
+                with open(file_abs_path, "w") as f:
+                    f.write(file_buf)
+                f.close()
+                from os import system
+                thread = Thread(target=system, args=[f"notepad.exe {file_abs_path}", ])
+                thread.setDaemon(True)
+                thread.start()
+                return True
+            except FileNotFoundError:
+                return False
+        except TypeError:
+            return False
 
     def child_thread(self, s: socket):
         try:

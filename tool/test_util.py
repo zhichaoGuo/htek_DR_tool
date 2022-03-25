@@ -1,5 +1,6 @@
 from datetime import datetime
 from os.path import abspath
+from threading import Thread
 from time import sleep
 
 import requests
@@ -100,6 +101,10 @@ def save_file(window, file_buf, model, file_methd):
                 f.write(file_buf)
             f.close()
             window.show_message('保存%s文件成功' % file_methd)
+            from os import system
+            thread = Thread(target=system, args=[f"{filePath[0]}", ])
+            thread.setDaemon(True)
+            thread.start()
         except FileNotFoundError:
             window.show_message('取消保存%s文件' % file_methd)
     except TypeError:
