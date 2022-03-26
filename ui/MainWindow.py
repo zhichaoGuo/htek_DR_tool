@@ -4,7 +4,7 @@ from PySide2.QtCore import Slot, QCoreApplication, Qt
 
 from tool.HL_Signal import HlSignal
 from tool.test_tool import set_pnum, set_pnums, save_screen, open_web, \
-    save_syslog, save_xml_cfg, set_all_btn, WebImportRom
+    save_syslog, save_xml_cfg, set_all_btn, WebImportRom, WebImportXmlCfg
 from tool.test_util import isIPv4, isOnline, return_ip, save_file
 from ui.ui_main import Ui_MainWindow
 
@@ -140,7 +140,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.show_message('正在导入rom')
 
     def f_btn_inport_cfg(self,tag):
-        pass
+        from os.path import abspath
+        set_all_btn(tag, False)
+        rom_abspath = QFileDialog.getOpenFileName(self, '打开导入的xml', abspath('.'), '.xml(*.xml)')
+        thread = Thread(target=WebImportXmlCfg, args=[self, tag, rom_abspath[0], ])
+        thread.setDaemon(True)
+        thread.start()
+        self.show_message('正在导入xml')
 
     def f_btn_ap(self, tag):
         thread = Thread(target=tag.exec_ap, args=[self, ])
@@ -227,6 +233,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_reboot.clicked.connect(lambda: self.f_btn_reboot(tag))
         tag.btn_factory.clicked.connect(lambda: self.f_btn_factory(tag))
         tag.btn_logserver.clicked.connect(lambda: self.f_btn_show_syslog(tag.device, tag.logserver_port))
+        tag.btn_calllog.clicked.connect(lambda :self.f_btn_show_calllog(tag))
         tag.btn_inport_rom.clicked.connect(lambda: self.f_btn_inport_rom(tag))
         tag.btn_inport_cfg.clicked.connect(lambda: self.f_btn_inport_cfg(tag))
         tag.btn_ap.clicked.connect(lambda: self.f_btn_ap(tag))

@@ -176,6 +176,7 @@ def set_all_btn(tag, value):
         tag.btn_pselect.setEnabled(value)
         tag.btn_pset.setEnabled(value)
         tag.btn_logserver.setEnabled(value)
+        tag.btn_calllog.setEnabled(value)
         if tag.register_lock_flag == 1:
             tag.btn_register.setEnabled(False)
         else:
@@ -221,6 +222,35 @@ def WebImportRom(window,tag,rom_abs_path:str):
         return True
     else:
         window.show_message('话机仍未成功', 1)
+        return False
+
+def WebImportXmlCfg(window, tag, xml_abs_path: str):
+    device = tag.device
+    url = 'http://%s/HLCFG_XML_configuration.htm'% device.ip
+    auth = (device.user, device.password)
+    files = {
+        'file': ('cfg.xml', open(xml_abs_path, 'rb').read(), "text/xml")
+    }
+    try:
+        r = hl_request('POST',url,auth=auth,files=files)
+        if r.status_code==200:
+            window.show_message('话机导入xml成功！')
+            tag.lab_online.setText('<font color=red>█重启█</font>')
+            time.sleep(10)
+            temp = loop_check_is_online(tag)
+            if temp is True:
+                window.show_message('话机启动成功')
+                set_all_btn(tag, True)
+                return True
+            else:
+                window.show_message('话机仍未启动成功', 1)
+                return False
+        else:
+            window.show_message('话机导入xml失败：%s' % r.status_code, 1)
+            set_all_btn(tag, True)
+    except Exception as err:
+        window.show_message('话机导入xml失败：%s' % err,1)
+        set_all_btn(tag, True)
         return False
 
 if __name__ == '__main__':
