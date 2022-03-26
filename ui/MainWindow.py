@@ -123,26 +123,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.syslogwindow = SyslogWindow(device, port)
         self.syslogwindow.show()
 
-    def f_btn_show_calllog(self,tag):
+    def f_btn_show_calllog(self, tag):
         """打开calllog界面"""
         from ui.CallLogWindow import CallLogWindow
         device = tag.device
         tag.calllogwindiw = CallLogWindow(device)
         tag.calllogwindiw.show()
 
-    def f_btn_inport_rom(self,tag):
+    def f_btn_inport_rom(self, tag):
         from os.path import abspath
-        set_all_btn(tag,False)
-        rom_abspath = QFileDialog.getOpenFileName(self,'打开导入的rom',abspath('.'),'.rom(*.rom)')
-        thread = Thread(target=WebImportRom, args=[self,tag,rom_abspath[0], ])
+        rom_abspath = QFileDialog.getOpenFileName(self, '打开导入的rom', abspath('.'), '.rom(*.rom)')
+        if rom_abspath[0] == '':
+            return 0
+        set_all_btn(tag, False)
+        thread = Thread(target=WebImportRom, args=[self, tag, rom_abspath[0], ])
         thread.setDaemon(True)
         thread.start()
         self.show_message('正在导入rom')
 
-    def f_btn_inport_cfg(self,tag):
+    def f_btn_inport_cfg(self, tag):
         from os.path import abspath
-        set_all_btn(tag, False)
         rom_abspath = QFileDialog.getOpenFileName(self, '打开导入的xml', abspath('.'), '.xml(*.xml)')
+        if rom_abspath[0] == '':
+            return 0
+        set_all_btn(tag, False)
         thread = Thread(target=WebImportXmlCfg, args=[self, tag, rom_abspath[0], ])
         thread.setDaemon(True)
         thread.start()
@@ -224,7 +228,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         thread.setDaemon(True)
         thread.start()
 
-
     def _connect_signal(self, tag):
         tag.btn_band.clicked.connect(lambda: self.f_btn_band(tag))
         tag.btn_web.clicked.connect(lambda: self.f_btn_open_web(tag))
@@ -233,7 +236,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_reboot.clicked.connect(lambda: self.f_btn_reboot(tag))
         tag.btn_factory.clicked.connect(lambda: self.f_btn_factory(tag))
         tag.btn_logserver.clicked.connect(lambda: self.f_btn_show_syslog(tag.device, tag.logserver_port))
-        tag.btn_calllog.clicked.connect(lambda :self.f_btn_show_calllog(tag))
+        tag.btn_calllog.clicked.connect(lambda: self.f_btn_show_calllog(tag))
         tag.btn_inport_rom.clicked.connect(lambda: self.f_btn_inport_rom(tag))
         tag.btn_inport_cfg.clicked.connect(lambda: self.f_btn_inport_cfg(tag))
         tag.btn_ap.clicked.connect(lambda: self.f_btn_ap(tag))
