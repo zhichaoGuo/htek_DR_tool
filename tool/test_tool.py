@@ -65,7 +65,7 @@ def query_pnum(device, pnum: str):
         if req.status_code == 200:
             return parsePhoneStatusXml(req.text)[pnum]
         else:
-            return '未能获取P%s' % pnum
+            return '未能获取%s' % pnum
     except Exception as err:
         print("query_pnum err:", err)
         return '未能发送请求获取%s' % pnum
