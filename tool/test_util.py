@@ -105,6 +105,7 @@ def save_file(window, file_buf, model, file_methd):
             thread = Thread(target=system, args=[f"{filePath[0]}", ])
             thread.setDaemon(True)
             thread.start()
+            return filePath[0]
         except FileNotFoundError:
             window.show_message('取消保存%s文件' % file_methd)
     except TypeError:

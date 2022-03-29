@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="syslog_lab">
+   <widget class="QLabel" name="syslog_lab_title">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -74,6 +74,19 @@
     </property>
     <property name="text">
      <string>在TXT中打开</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="syslog_lab_state">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>410</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>状态正常</string>
     </property>
    </widget>
   </widget>
