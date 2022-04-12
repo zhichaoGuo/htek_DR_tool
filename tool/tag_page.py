@@ -13,7 +13,7 @@ class Tag:
             # 话机信息
             self.text_ip = ui.D1_text_ip
             self.box_password = ui.D1_box_password
-            self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
+            self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234','admin:7627'])  # 添加密码选项内容
             self.btn_band = ui.D1_btn_band
             self.lab_online = ui.D1_lab_online
             self.btn_web = ui.D1_btn_web
