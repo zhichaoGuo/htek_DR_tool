@@ -20,7 +20,7 @@
       <x>6</x>
       <y>9</y>
       <width>201</width>
-      <height>751</height>
+      <height>741</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -366,7 +366,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>161</width>
+         <width>111</width>
          <height>23</height>
         </rect>
        </property>
@@ -382,6 +382,19 @@
          <width>161</width>
          <height>22</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D1_btn_reset_account">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>50</y>
+         <width>51</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>去注册</string>
        </property>
       </widget>
      </widget>
@@ -557,7 +570,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>161</width>
+         <width>111</width>
          <height>23</height>
         </rect>
        </property>
@@ -573,6 +586,19 @@
          <width>161</width>
          <height>22</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D2_btn_reset_account">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>50</y>
+         <width>51</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>去注册</string>
        </property>
       </widget>
      </widget>
@@ -1536,7 +1562,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>161</width>
+         <width>111</width>
          <height>23</height>
         </rect>
        </property>
@@ -1552,6 +1578,19 @@
          <width>161</width>
          <height>22</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="D3_btn_reset_account">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>50</y>
+         <width>51</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>去注册</string>
        </property>
       </widget>
      </widget>
@@ -2046,7 +2085,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>161</width>
+         <width>111</width>
          <height>23</height>
         </rect>
        </property>
@@ -2064,6 +2103,19 @@
         </rect>
        </property>
       </widget>
+      <widget class="QPushButton" name="D4_btn_reset_account">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>50</y>
+         <width>51</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>去注册</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>
@@ -2071,13 +2123,26 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>780</y>
+      <y>790</y>
       <width>191</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>message</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_ABYSS">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>760</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ABYSS面板</string>
     </property>
    </widget>
   </widget>

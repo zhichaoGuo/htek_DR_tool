@@ -191,6 +191,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                    'P34': sip_password}  # Authenticate Password
         set_pnums(tag.device, set_dic)
 
+    def f_btn_reset_account(self,tag):
+        """为当前话机去注册"""
+        set_dic = {'P47': '',  # sip server
+                   'P480': '',  # outbound server
+                   'P130': '0',  # SIP Transport
+                   'P271': '0',  # account active
+                   'P24082': '0',  # Profile 1
+                   'P35': '',  # SIP User ID
+                   'P36': '',  # Authenticate ID
+                   'P34': ''}  # Authenticate Password
+        set_pnums(tag.device, set_dic)
+
     def f_btn_save_screen(self, tag):
         """保存截图"""
         # 起新线程下载syslog
@@ -244,6 +256,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.btn_ptxt.clicked.connect(lambda: self.f_btn_open_ptxt())
         tag.btn_pset.clicked.connect(lambda: self.f_btn_pset(tag))
         tag.btn_register.clicked.connect(lambda: self.f_btn_register(tag))
+        tag.btn_reset_account.clicked.connect(lambda: self.f_btn_reset_account(tag))
         tag.btn_savescreen.clicked.connect(lambda: self.f_btn_save_screen(tag))
         tag.btn_savelog.clicked.connect(lambda: self.f_btn_save_syslog(tag))
         tag.btn_savecfg.clicked.connect(lambda: self.f_btn_save_cfg(tag))

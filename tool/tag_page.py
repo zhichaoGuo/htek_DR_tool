@@ -40,6 +40,7 @@ class Tag:
             # 注册区
             self.box_register = ui.D1_box_register
             self.btn_register = ui.D1_btn_register
+            self.btn_reset_account = ui.D1_btn_reset_account
             # 保存区
             self.btn_savescreen = ui.D1_btn_savescreen
             self.btn_savelog = ui.D1_btn_savelog
@@ -77,6 +78,7 @@ class Tag:
             # 注册区
             self.box_register = ui.D2_box_register
             self.btn_register = ui.D2_btn_register
+            self.btn_reset_account = ui.D2_btn_reset_account
             # 保存区
             self.btn_savescreen = ui.D2_btn_savescreen
             self.btn_savelog = ui.D2_btn_savelog
@@ -114,6 +116,7 @@ class Tag:
             # 注册区
             self.box_register = ui.D3_box_register
             self.btn_register = ui.D3_btn_register
+            self.btn_reset_account = ui.D3_btn_reset_account
             # 保存区
             self.btn_savescreen = ui.D3_btn_savescreen
             self.btn_savelog = ui.D3_btn_savelog
@@ -151,6 +154,7 @@ class Tag:
             # 注册区
             self.box_register = ui.D4_box_register
             self.btn_register = ui.D4_btn_register
+            self.btn_reset_account = ui.D4_btn_reset_account
             # 保存区
             self.btn_savescreen = ui.D4_btn_savescreen
             self.btn_savelog = ui.D4_btn_savelog
