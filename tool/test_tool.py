@@ -181,6 +181,7 @@ def set_all_btn(tag, value):
             tag.btn_register.setEnabled(False)
         else:
             tag.btn_register.setEnabled(value)
+        tag.btn_reset_account.setEnabled(value)
         tag.btn_savescreen.setEnabled(value)
         tag.btn_savelog.setEnabled(value)
         tag.btn_savecfg.setEnabled(value)
