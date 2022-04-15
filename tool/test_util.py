@@ -142,3 +142,6 @@ def check_device_alive(window, tag):
         tag.clean_state()
         tag.connect_state(False)
         window.show_message('话机未响应', 1)
+
+def get_abyss_device_info(window):
+    pass
