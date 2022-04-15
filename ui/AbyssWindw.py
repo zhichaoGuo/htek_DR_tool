@@ -5,8 +5,7 @@ from ui.ui_abyss import Ui_Abyss
 
 
 class AbyssWindow(QtWidgets.QMainWindow):
-    def __init__(self, device):
-        self.device = device
+    def __init__(self):
         super(AbyssWindow, self).__init__()
         self.ui = Ui_Abyss()
         self.ui.setupUi(self)

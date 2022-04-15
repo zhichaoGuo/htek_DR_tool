@@ -32,6 +32,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._connect_signal(self.D2)
         self._connect_signal(self.D3)
         self._connect_signal(self.D4)
+        self.btn_ABYSS.clicked.connect(lambda: self.f_btn_show_abyss())
         # 创建信号
         self.HlSignal = HlSignal()
         self.file = 'syslog'
@@ -245,6 +246,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         thread = Thread(target=system, args=["notepad.exe P值表.txt", ])
         thread.setDaemon(True)
         thread.start()
+
+    def f_btn_show_abyss(self):
+        """打开abyss并展示界面"""
+        from ui.AbyssWindw import AbyssWindow
+        # 展示界面
+        self.abysswindow = AbyssWindow()
+        self.abysswindow.show()
 
     def _connect_signal(self, tag):
         tag.btn_band.clicked.connect(lambda: self.f_btn_band(tag))
