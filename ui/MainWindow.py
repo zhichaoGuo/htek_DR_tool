@@ -176,22 +176,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def f_btn_register(self, tag):
         """注册选中的注册信息"""
         from yaml import safe_load
-        current_account = safe_load(open('register_date.yml', 'r', encoding='utf-8').read())[
-            tag.box_register.currentText()]
-        sip_server = current_account['sip_server']
-        sip_user = current_account['sip_user']
-        sip_password = current_account['sip_password']
-        set_dic = {'P47': sip_server,  # sip server
-                   'P480': '',  # outbound server
-                   'P130': '0',  # SIP Transport
-                   'P271': '1',  # account active
-                   'P24082': '0',  # Profile 1
-                   'P35': sip_user,  # SIP User ID
-                   'P36': sip_user,  # Authenticate ID
-                   'P34': sip_password}  # Authenticate Password
-        set_pnums(tag.device, set_dic)
+        from tool.config import hlcfg
+        current_account ={}
+        for data in hlcfg.get_option('register_date'):
+            if tag.box_register.currentText() in data.keys():
+                current_account = data[tag.box_register.currentText()]
+                break
+        if current_account is  not None:
+            sip_server = current_account['sip_server']
+            sip_user = current_account['sip_user']
+            Authenticate = current_account['Authenticate']
+            sip_password = current_account['sip_password']
+            set_dic = {'P47': sip_server,  # sip server
+                       'P480': '',  # outbound server
+                       'P130': '0',  # SIP Transport
+                       'P271': '1',  # account active
+                       'P24082': '0',  # Profile 1
+                       'P35': sip_user,  # SIP User ID
+                       'P36': Authenticate,  # Authenticate ID
+                       'P34': sip_password}  # Authenticate Password
+            set_pnums(tag.device, set_dic)
 
-    def f_btn_reset_account(self,tag):
+    def f_btn_reset_account(self, tag):
         """为当前话机去注册"""
         set_dic = {'P47': '',  # sip server
                    'P480': '',  # outbound server

@@ -1,0 +1,58 @@
+password:
+  - admin:admin
+  - admin:7267
+import_cfg_path:
+  - C:\\Users\\admin
+import_rom_path:
+  - C:\\Users\\admin
+register_date:
+  - 3cx 1501:
+      sip_server: 192.168.0.68
+      sip_user: 1501
+      Authenticate: 1501
+      sip_password: 222222
+  - 3cx 1502:
+      sip_server: 192.168.0.68
+      sip_user: 1502
+      Authenticate: 1502
+      sip_password: 222222
+  - 3cx 1503:
+      sip_server: 192.168.0.68
+      sip_user: 1503
+      Authenticate: 1503
+      sip_password: 222222
+  - 3cx 1504:
+      sip_server: 192.168.0.68
+      sip_user: 1504
+      Authenticate: 1504
+      sip_password: 222222
+  - free 1501:
+      sip_server: 192.168.0.10
+      sip_user: 1501
+      Authenticate: 1501
+      sip_password: 222222
+  - free 1502:
+      sip_server: 192.168.0.10
+      sip_user: 1502
+      Authenticate: 1502
+      sip_password: 222222
+  - free 1503:
+      sip_server: 192.168.0.10
+      sip_user: 1503
+      Authenticate: 1503
+      sip_password: 222222
+  - free 1504:
+      sip_server: 192.168.0.10
+      sip_user: 1504
+      Authenticate: 1504
+      sip_password: 222222
+download_daily_rom_url:
+  - http://repo.htek.com:8810/job/elpis_dev_new/138/artifact/out/roms/neutral/
+download_output_url:
+  - http://abyss-dl.htek.com/.task/41da47c8-bc60-11ec-81d0-000c29ffac12/output/
+save_rom_path:
+  - G:\\HTTP\\fw\\abyss\\
+  - C:\\Users\\admin
+save_output_path:
+  - G:\\HTTP\\fw\\abyss\\daily_file\\
+  - C:\\Users\\admin

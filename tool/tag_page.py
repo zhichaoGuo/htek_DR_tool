@@ -160,11 +160,16 @@ class Tag:
             self.btn_savelog = ui.D4_btn_savelog
             self.btn_savecfg = ui.D4_btn_savecfg
         try:
-            self.box_register.addItems(
-                list(safe_load(open('register_date.yml', 'r', encoding='utf-8').read())))  # 添加注册选框内容
+            from tool.config import hlcfg
+            # 添加注册选框内容
+            datas = []
+            for data in hlcfg.get_option('register_date'):
+                datas.append(*list(data.keys()))
+            self.box_register.addItems(datas)
+            self.box_register.addItems(hlcfg.get_option('register_date'))
             self.register_lock_falg = 0
         except Exception:
-            self.box_register.addItems(['请检查register_date.yml'])
+            self.box_register.addItems(['请检查config.yml'])
             self.register_lock_flag = 1
 
     def connect_state(self, state):
