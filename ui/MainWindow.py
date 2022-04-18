@@ -32,7 +32,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._connect_signal(self.D2)
         self._connect_signal(self.D3)
         self._connect_signal(self.D4)
-        self.btn_ABYSS.clicked.connect(lambda: self.f_btn_show_abyss())
+        self.btn_ABYSS.clicked.connect(self.f_btn_show_abyss)
         # 创建信号
         self.HlSignal = HlSignal()
         self.file = 'syslog'

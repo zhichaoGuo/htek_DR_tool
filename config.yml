@@ -1,10 +1,12 @@
 password:
   - admin:admin
+  - Administrator:9102SerCloudPBX
+  - user:1234
   - admin:7267
 import_cfg_path:
-  - C:\\Users\\admin
+  - C:/Users/admin/Desktop
 import_rom_path:
-  - C:\\Users\\admin
+  - C:/Users/admin/Desktop
 register_date:
   - 3cx 1501:
       sip_server: 192.168.0.68
@@ -51,8 +53,8 @@ download_daily_rom_url:
 download_output_url:
   - http://abyss-dl.htek.com/.task/41da47c8-bc60-11ec-81d0-000c29ffac12/output/
 save_rom_path:
-  - G:\\HTTP\\fw\\abyss\\
-  - C:\\Users\\admin
+  - G:/HTTP/fw/abyss/
+  - C:/Users/admin/Desktop
 save_output_path:
-  - G:\\HTTP\\fw\\abyss\\daily_file\\
-  - C:\\Users\\admin
+  - G:/HTTP/fw/abyss/daily_file/
+  - C:/Users/admin/Desktop

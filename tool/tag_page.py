@@ -5,7 +5,7 @@ from ui.MainWindow import MainWindow
 
 class Tag:
     def __init__(self, ui: MainWindow, tag_number):
-        from yaml import safe_load
+        from tool.config import hlcfg
         self.register_lock_flag = 0
         if tag_number == 1:
             # 页面分类
@@ -13,7 +13,7 @@ class Tag:
             # 话机信息
             self.text_ip = ui.D1_text_ip
             self.box_password = ui.D1_box_password
-            self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234','admin:7627'])  # 添加密码选项内容
+            self.box_password.addItems(hlcfg.get_option('password'))  # 添加密码选项内容
             self.btn_band = ui.D1_btn_band
             self.lab_online = ui.D1_lab_online
             self.btn_web = ui.D1_btn_web
@@ -51,7 +51,7 @@ class Tag:
             # 话机信息
             self.text_ip = ui.D2_text_ip
             self.box_password = ui.D2_box_password
-            self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
+            self.box_password.addItems(hlcfg.get_option('password'))  # 添加密码选项内容
             self.btn_band = ui.D2_btn_band
             self.lab_online = ui.D2_lab_online
             self.btn_web = ui.D2_btn_web
@@ -89,7 +89,7 @@ class Tag:
             # 话机信息
             self.text_ip = ui.D3_text_ip
             self.box_password = ui.D3_box_password
-            self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
+            self.box_password.addItems(hlcfg.get_option('password'))  # 添加密码选项内容
             self.btn_band = ui.D3_btn_band
             self.lab_online = ui.D3_lab_online
             self.btn_web = ui.D3_btn_web
@@ -127,7 +127,7 @@ class Tag:
             # 话机信息
             self.text_ip = ui.D4_text_ip
             self.box_password = ui.D4_box_password
-            self.box_password.addItems(['admin:admin', 'Administrator:9102SerCloudPBX', 'user:1234'])  # 添加密码选项内容
+            self.box_password.addItems(hlcfg.get_option('password'))  # 添加密码选项内容
             self.btn_band = ui.D4_btn_band
             self.lab_online = ui.D4_lab_online
             self.btn_web = ui.D4_btn_web
@@ -166,7 +166,6 @@ class Tag:
             for data in hlcfg.get_option('register_date'):
                 datas.append(*list(data.keys()))
             self.box_register.addItems(datas)
-            self.box_register.addItems(hlcfg.get_option('register_date'))
             self.register_lock_falg = 0
         except Exception:
             self.box_register.addItems(['请检查config.yml'])

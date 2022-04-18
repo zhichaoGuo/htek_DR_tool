@@ -6,39 +6,54 @@ class HlConfig:
     def __init__(self):
         try:
             self.cfg = safe_load(open('./config.yml', 'r', encoding='utf-8').read())
+            self.load_state = True
         except FileNotFoundError:
-            pass
+            self.load_state = False
 
     def add_option(self, option_name, value):
-        print(self.cfg.keys())
-        if option_name in self.cfg.keys():
-            print(self.cfg[option_name])
-            if value in self.cfg[option_name]:
-                print('参数已存在')
-                return False
+        if self.load_state is True:
+            print(self.cfg.keys())
+            if option_name in self.cfg.keys():
+                print(self.cfg[option_name])
+                if value in self.cfg[option_name]:
+                    print('参数已存在')
+                    return False
+                else:
+                    self.cfg[option_name].append(value)
+                    self.save_cfg_file()
+                    return True
             else:
-                self.cfg[option_name].append(value)
-                self.save_cfg_file()
-                return True
+                print('配置项不存在')
+                return False
         else:
-            print('配置项不存在')
             return False
 
     def set_option(self, option_name, value):
-        if option_name in self.cfg.keys():
-            print(self.cfg[option_name])
-            self.cfg[option_name] = [value]
-            self.save_cfg_file()
-            return True
+        if self.load_state is True:
+            if option_name in self.cfg.keys():
+                print(self.cfg[option_name])
+                self.cfg[option_name] = [value]
+                self.save_cfg_file()
+                return True
+            else:
+                print('配置项不存在')
+                return False
         else:
-            print('配置项不存在')
             return False
 
     def get_option(self, option_name):
-        return self.cfg[option_name]
+        if self.load_state is True:
+            return self.cfg[option_name]
+        else:
+            return False
 
     def save_cfg_file(self):
-        yaml.safe_dump(self.cfg, open('./config.yml', 'w'))
+        if self.load_state is True:
+            yaml.safe_dump(self.cfg, open('./config.yml', 'w'))
+            return True
+        else:
+            print('config.yml load err')
+            return False
 
 
 hlcfg = HlConfig()
