@@ -1,7 +1,7 @@
 download_daily_rom_url:
 - http://repo.htek.com:8810/job/elpis_dev_new/141/artifact/out/roms/neutral/
 download_output_url:
-- http://abyss-dl.htek.com/.task/41da47c8-bc60-11ec-81d0-000c29ffac12/output/
+- http://abyss-dl.htek.com/.task/635a966e-bf8f-11ec-8995-000c29ffac12/output/
 import_cfg_path:
 - C:/Users/admin/Desktop
 import_rom_path:

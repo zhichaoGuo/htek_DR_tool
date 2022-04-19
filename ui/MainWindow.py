@@ -1,4 +1,6 @@
 from threading import Thread
+
+from PySide2 import QtGui
 from PySide2.QtWidgets import QMainWindow, QMessageBox, QFileDialog
 from PySide2.QtCore import Slot, QCoreApplication, Qt
 
@@ -17,6 +19,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             Qt.WindowCloseButtonHint |  # 使能关闭按钮
                             Qt.WindowStaysOnTopHint)  # 窗体总在最前端
         self.setupUi(self)
+        self.setWindowIcon(QtGui.QIcon("htek.ico"))
         # 分页
         self.D1 = Tag(self, 1)
         self.D2 = Tag(self, 2)
