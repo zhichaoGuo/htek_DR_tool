@@ -86,3 +86,9 @@
 - 支持导入配置
 - 支持syslog界面保存文件
 - 优化导入
+## 0.2.0
+- 添加netsapiens默认密码
+- 支持去注册
+- 添加config.yml统一配置
+- 新增abyss页面
+- 新增下载rom及output功能
