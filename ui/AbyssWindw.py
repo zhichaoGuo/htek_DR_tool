@@ -15,8 +15,10 @@ class AbyssWindow(QtWidgets.QMainWindow):
         super(AbyssWindow, self).__init__()
         self.ui = Ui_Abyss()
         self.ui.setupUi(self)
-        # 创建信号
+        # 创建并连接信号
         self.HlSignal = HlSignal()
+        self.HlSignal.show_message.connect(self._show_message)
+        # 设置配置中的文本
         self.ui.text_jenkins_url.setText(*hlcfg.get_option('download_daily_rom_url'))
         self.ui.text_output_path.setText(*hlcfg.get_option('download_output_url'))
         try:
@@ -25,9 +27,11 @@ class AbyssWindow(QtWidgets.QMainWindow):
         except Exception:
             self.ui.box_save_rom_path.addItems(['C:/Users/admin'])
             self.ui.box_save_output_path.addItems(['C:/Users/admin'])
-        self.HlSignal.show_message.connect(self._show_message)
+        # 连接控件方法
         self.ui.btn_download_dailyt_rom.clicked.connect(self.f_btn_download_daily_rom)
+        self.ui.btn_open_rom_dir.clicked.connect(self.f_btn_open_rom_dir)
         self.ui.btn_download_output.clicked.connect(self.f_btn_download_output)
+        self.ui.btn_open_output_dir.clicked.connect(self.f_btn_open_output_dir)
         # 添加图标
         self.setWindowIcon(QIcon("htek.ico"))
 
@@ -42,6 +46,14 @@ class AbyssWindow(QtWidgets.QMainWindow):
         thread.setDaemon(True)
         thread.start()
         self.show_message('正在下载output')
+
+    def f_btn_open_rom_dir(self):
+        start_directory = self.ui.box_save_rom_path.currentText()
+        os.startfile(start_directory)
+
+    def f_btn_open_output_dir(self):
+        start_directory = self.ui.box_save_output_path.currentText()
+        os.startfile(start_directory)
 
     def show_message(self, message, level=0):
         self.HlSignal.show_message.emit(message, level)

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>804</width>
+    <width>844</width>
     <height>684</height>
    </rect>
   </property>
@@ -79,7 +79,7 @@
     <rect>
      <x>430</x>
      <y>50</y>
-     <width>361</width>
+     <width>391</width>
      <height>81</height>
     </rect>
    </property>
@@ -104,7 +104,7 @@
      <rect>
       <x>80</x>
       <y>20</y>
-      <width>271</width>
+      <width>301</width>
       <height>20</height>
      </rect>
     </property>
@@ -137,12 +137,25 @@
      <rect>
       <x>270</x>
       <y>50</y>
-      <width>81</width>
+      <width>61</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>开始下载</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_open_rom_dir">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>50</y>
+      <width>41</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>打开</string>
     </property>
    </widget>
   </widget>
@@ -151,7 +164,7 @@
     <rect>
      <x>430</x>
      <y>140</y>
-     <width>361</width>
+     <width>391</width>
      <height>80</height>
     </rect>
    </property>
@@ -163,7 +176,7 @@
      <rect>
       <x>80</x>
       <y>20</y>
-      <width>271</width>
+      <width>301</width>
       <height>20</height>
      </rect>
     </property>
@@ -196,7 +209,7 @@
      <rect>
       <x>270</x>
       <y>50</y>
-      <width>81</width>
+      <width>61</width>
       <height>23</height>
      </rect>
     </property>
@@ -215,6 +228,19 @@
     </property>
     <property name="text">
      <string>保存路径</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_open_output_dir">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>50</y>
+      <width>41</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>打开</string>
     </property>
    </widget>
   </widget>
