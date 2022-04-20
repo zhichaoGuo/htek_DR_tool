@@ -12,6 +12,8 @@ from ui.ui_syslog import Ui_SyslogWindow
 
 class SyslogWindow(QtWidgets.QMainWindow):
     def __init__(self, device, port: int):
+        from PySide2.QtGui import QIcon
+        self.setWindowIcon(QIcon("htek.ico"))   # 添加图标
         self.device = device
         super(SyslogWindow, self).__init__()
         self.s = socket(AF_INET, SOCK_DGRAM)

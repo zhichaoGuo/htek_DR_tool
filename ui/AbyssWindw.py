@@ -1,8 +1,6 @@
 ﻿import datetime
 import os
 from threading import Thread
-
-import yaml
 from PySide2 import QtWidgets
 
 from tool.HL_Signal import HlSignal
@@ -11,6 +9,7 @@ from tool.test_util import hl_request
 
 class AbyssWindow(QtWidgets.QMainWindow):
     def __init__(self):
+        from PySide2.QtGui import QIcon
         from ui.ui_abyss import Ui_Abyss
         from tool.config import hlcfg
         super(AbyssWindow, self).__init__()
@@ -29,6 +28,8 @@ class AbyssWindow(QtWidgets.QMainWindow):
         self.HlSignal.show_message.connect(self._show_message)
         self.ui.btn_download_dailyt_rom.clicked.connect(self.f_btn_download_daily_rom)
         self.ui.btn_download_output.clicked.connect(self.f_btn_download_output)
+        # 添加图标
+        self.setWindowIcon(QIcon("htek.ico"))
 
     def f_btn_download_daily_rom(self):
         thread = Thread(target=download_daily_rom, args=[self, ])
@@ -52,6 +53,7 @@ class AbyssWindow(QtWidgets.QMainWindow):
             self.ui.label_info.setText(message)
 
 def download_daily_rom(window):
+    # url_frist 应为 http://repo.htek.com:8810/job/2.42.6.5.15R/ws/out/roms/neutral/
     from tool.config import hlcfg
     hlcfg.set_option('download_daily_rom_url',window.ui.text_jenkins_url.text())
     save_path = window.ui.box_save_rom_path.currentText()
@@ -77,6 +79,7 @@ def download_daily_rom(window):
 
 
 def download_output(window):
+    # url_first 应为 http://abyss-dl.htek.com/.task/c6d9f29e-c06f-11ec-a693-000c29ffac12/output/
     from tool.config import hlcfg
     hlcfg.set_option('download_output_url',window.ui.text_output_path.text())
     url_first = window.ui.text_output_path.text()

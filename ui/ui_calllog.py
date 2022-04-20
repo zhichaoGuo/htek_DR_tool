@@ -55,7 +55,7 @@ class Ui_CalllogWindow(object):
     # setupUi
 
     def retranslateUi(self, CalllogWindow):
-        CalllogWindow.setWindowTitle(QCoreApplication.translate("CalllogWindow", u"Dialog", None))
+        CalllogWindow.setWindowTitle(QCoreApplication.translate("CalllogWindow", u"HTT - Dialog", None))
         self.groupBox.setTitle(QCoreApplication.translate("CalllogWindow", u"\u9884\u89c8\u533a", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("CalllogWindow", u"\u5bfc\u5165\u533a", None))
         self.label.setText(QCoreApplication.translate("CalllogWindow", u"\u8bb0\u5f55\u59d3\u540d", None))
