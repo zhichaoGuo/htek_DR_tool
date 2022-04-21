@@ -52,6 +52,8 @@ register_date:
     sip_password: 222222
     sip_server: 192.168.0.10
     sip_user: 1504
+abyss_server:
+    - http://abyss.htek.com:5001/
 save_output_path:
 - G:/HTTP/fw/abyss/daily_file/
 - C:/Users/admin/Desktop/
