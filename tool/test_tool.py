@@ -102,6 +102,19 @@ def AutoProvisionNow(device):
         return False
 
 
+def reboot_device(device):
+    url = 'http://%s/rb_phone.htm' % device.ip
+    auth = (device.user, device.password)
+    r = hl_request('GET', url, auth=auth)
+    return r
+
+
+def factory_device(device):
+    url = 'http://%s/Abyss/FactoryReset' % device.ip
+    r = hl_request('GET', url, auth=(device.user, device.password))
+    return r
+
+
 def save_screen(window, device):
     url = "http://%s/download_screen" % device.ip
     auth = (device.user, device.password)
@@ -187,32 +200,32 @@ def set_all_btn(tag, value):
         tag.btn_savecfg.setEnabled(value)
 
 
-def WebImportRom(window,tag,rom_abs_path:str):
-    rom_abs_path=rom_abs_path.replace('\\','\\\\')
+def WebImportRom(window, tag, rom_abs_path: str):
+    rom_abs_path = rom_abs_path.replace('\\', '\\\\')
     device = tag.device
     skip_rom_check = 'http://%s/skip_rom_check' % device.ip
     url = 'http://%s/upgrade_upload' % device.ip
     auth = (device.user, device.password)
     files = {'file': open(rom_abs_path, 'rb')}
-    r = hl_request('get',skip_rom_check,auth=auth)
-    if r.status_code != 200 :
+    r = hl_request('get', skip_rom_check, auth=auth)
+    if r.status_code != 200:
         print('send request to skip rom check fail :%s' % r.status_code)
-        window.show_message('导入rom失败：skip rom check fail',1)
-        set_all_btn(tag,True)
+        window.show_message('导入rom失败：skip rom check fail', 1)
+        set_all_btn(tag, True)
         return False
     try:
-        r = hl_request('POST',url,auth=auth,files=files)
+        r = hl_request('POST', url, auth=auth, files=files)
         if r.status_code == 401:
             print('send request to upgrade return code is 401 , try again')
             r = hl_request('POST', url, auth=auth, files=files)
             if r.status_code != 200:
-                window.show_message('导入rom失败：两次导入均失败',1)
-                set_all_btn(tag,True)
+                window.show_message('导入rom失败：两次导入均失败', 1)
+                set_all_btn(tag, True)
                 return False
         window.show_message('导入rom成功！正在升级')
     except Exception as err:
         print('导入rom失败 :%s' % err)
-        set_all_btn(tag,True)
+        set_all_btn(tag, True)
         return False
     tag.lab_online.setText('<font color=red>█升级█</font>')
     time.sleep(100)
@@ -225,16 +238,17 @@ def WebImportRom(window,tag,rom_abs_path:str):
         window.show_message('话机仍未成功', 1)
         return False
 
+
 def WebImportXmlCfg(window, tag, xml_abs_path: str):
     device = tag.device
-    url = 'http://%s/HLCFG_XML_configuration.htm'% device.ip
+    url = 'http://%s/HLCFG_XML_configuration.htm' % device.ip
     auth = (device.user, device.password)
     files = {
         'file': ('cfg.xml', open(xml_abs_path, 'rb').read(), "text/xml")
     }
     try:
-        r = hl_request('POST',url,auth=auth,files=files)
-        if r.status_code==200:
+        r = hl_request('POST', url, auth=auth, files=files)
+        if r.status_code == 200:
             window.show_message('话机导入xml成功！')
             tag.lab_online.setText('<font color=red>█重启█</font>')
             time.sleep(10)
@@ -250,9 +264,10 @@ def WebImportXmlCfg(window, tag, xml_abs_path: str):
             window.show_message('话机导入xml失败：%s' % r.status_code, 1)
             set_all_btn(tag, True)
     except Exception as err:
-        window.show_message('话机导入xml失败：%s' % err,1)
+        window.show_message('话机导入xml失败：%s' % err, 1)
         set_all_btn(tag, True)
         return False
+
 
 if __name__ == '__main__':
     pass

@@ -17,5 +17,5 @@ class AbyssInfo:
 def less_info_device(device:list):
     less = []
     for dev in device:
-        less.append([dev['model'],dev['ip'],dev['mac'],dev['version']])
+        less.append([dev['model'],dev['ip'],dev['mac'],dev['version'],dev['app'],dev['state']])
     return less

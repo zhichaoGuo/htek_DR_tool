@@ -59,3 +59,5 @@ save_rom_path:
 - G:/HTTP/fw/abyss/daily_na/
 - G:/HTTP/fw/abyss/daily_654/
 - C:/Users/admin/Desktop/
+abyss_upgrade_url:
+    - http://10.3.3.49/fw/abyss/daily_na/
