@@ -17,6 +17,13 @@ class AbyssInfo:
         except Exception:
             print('服务器不可达')
 
+    def less_info(self):
+        less = []
+        for dev in self.device:
+            less.append([dev['model'], dev['ip'], dev['mac'], dev['version'], dev['app'], dev['state']])
+        self.device = []
+        return less
+
 
 def less_info_device(device:list):
     less = []

@@ -45,6 +45,7 @@ class AbyssWindow(QtWidgets.QMainWindow):
             self.ui.box_save_output_path.addItems(['C:/Users/admin'])
         self.ui.text_abyss_upgrade_url.setText(*hlcfg.get_option('abyss_upgrade_url'))
         # 连接控件方法
+        self.ui.btn_refresh.clicked.connect(self.f_btn_refresh)
         self.ui.btn_download_dailyt_rom.clicked.connect(self.f_btn_download_daily_rom)
         self.ui.btn_open_rom_dir.clicked.connect(self.f_btn_open_rom_dir)
         self.ui.btn_download_output.clicked.connect(self.f_btn_download_output)
@@ -67,9 +68,10 @@ class AbyssWindow(QtWidgets.QMainWindow):
         self.ui.tableWidget.setColumnWidth(4, 105)
         self.ui.tableWidget.setColumnWidth(5, 145)
         # 设置表格内容和复选框
-        abyss_device = AbyssInfo()
-        abyss_device = less_info_device(abyss_device.device)
+        abyss_device = AbyssInfo().less_info()
+        # abyss_device = less_info_device(abyss_device.device)
         self.ui.tableWidget.setRowCount(len(abyss_device))  # 设置表格行数
+        print('row is :' + str(len(abyss_device)))
         for i in range(len(abyss_device)):
             checkbox = QCheckBox()
             all_header_checkbox.append(checkbox)
@@ -89,7 +91,7 @@ class AbyssWindow(QtWidgets.QMainWindow):
         # 配置列不可编辑
         for i in [0, 1, 2, 3]:
             self.ui.tableWidget.setItemDelegateForColumn(i, EmptyDelegate(self.ui.tableWidget))
-
+        abyss_device = None
     # # 删除选中的行数
     # def delete_check(self):
     #     row_box_list = []
@@ -101,6 +103,13 @@ class AbyssWindow(QtWidgets.QMainWindow):
     #     for j in row_box_list:
     #         self.ui.tableWidget.removeRow(j)  # 删除选中行数据
     #         all_header_checkbox.pop(j)  # 重新构建check box列表
+
+    def f_btn_refresh(self):
+        for j in range(self.ui.tableWidget.rowCount()):
+            print(self.ui.tableWidget.rowCount())
+            self.ui.tableWidget.removeRow(0)  # 删除选中行数据
+        self.all_header_checkbox=[]
+        self.settable()
 
     def f_btn_download_daily_rom(self):
         thread = Thread(target=download_daily_rom, args=[self, ])
