@@ -4,9 +4,8 @@ import requests
 
 
 class AbyssInfo:
-    device = []
-
     def __init__(self):
+        self.device = []
         from tool.config import hlcfg
         url = hlcfg.get_option('abyss_server')[0]+ 'phonedatas'
         try:
@@ -21,12 +20,5 @@ class AbyssInfo:
         less = []
         for dev in self.device:
             less.append([dev['model'], dev['ip'], dev['mac'], dev['version'], dev['app'], dev['state']])
-        self.device = []
         return less
 
-
-def less_info_device(device:list):
-    less = []
-    for dev in device:
-        less.append([dev['model'],dev['ip'],dev['mac'],dev['version'],dev['app'],dev['state']])
-    return less

@@ -4,7 +4,7 @@ from threading import Thread
 from PySide2 import QtWidgets
 
 from tool.HL_Signal import HlSignal
-from tool.abyss import AbyssInfo, less_info_device
+from tool.abyss import AbyssInfo
 from tool.hl_device import VoipDevice
 from tool.test_tool import set_pnum, skip_rom_check, AutoProvisionNow, reboot_device, factory_device
 from tool.test_util import hl_request
@@ -72,6 +72,7 @@ class AbyssWindow(QtWidgets.QMainWindow):
         # abyss_device = less_info_device(abyss_device.device)
         self.ui.tableWidget.setRowCount(len(abyss_device))  # 设置表格行数
         print('row is :' + str(len(abyss_device)))
+
         for i in range(len(abyss_device)):
             checkbox = QCheckBox()
             all_header_checkbox.append(checkbox)
@@ -136,8 +137,11 @@ class AbyssWindow(QtWidgets.QMainWindow):
         # 获取选中数据
         for i in range(self.ui.tableWidget.rowCount()):
             if self.ui.tableWidget.cellWidget(i, 0).isChecked() is True:
-                device = VoipDevice(self.ui.tableWidget.item(i, 1).text(), 'admin', 'admin')
-                row_box_list.append(device)
+                try:
+                    device = VoipDevice(self.ui.tableWidget.item(i, 1).text(), 'admin', 'admin')
+                    row_box_list.append(device)
+                except AttributeError:
+                    print('phone %s init fail'% self.ui.tableWidget.item(i, 1).text())
         if row_box_list:
             thread = Thread(target=ap_all_device, args=[self, row_box_list, ])
             thread.setDaemon(True)
