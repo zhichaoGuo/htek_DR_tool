@@ -11,9 +11,7 @@ from ui.ui_syslog import Ui_SyslogWindow
 
 
 class SyslogWindow(QtWidgets.QMainWindow):
-    def __init__(self, device, port: int):
-        from PySide2.QtGui import QIcon
-        self.setWindowIcon(QIcon("htek.ico"))   # 添加图标
+    def __init__(self, device, port: int):  # 添加图标
         self.device = device
         super(SyslogWindow, self).__init__()
         self.s = socket(AF_INET, SOCK_DGRAM)
@@ -21,21 +19,23 @@ class SyslogWindow(QtWidgets.QMainWindow):
         self.s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
         self.s.setblocking(True)
         self.s.bind((return_ip(), port))
-        # 创建线程
-        thread = Thread(target=self.child_thread, args=[self.s, ])
-        # 设置成守护线程
-        thread.setDaemon(True)
-        # 启动线程
-        thread.start()
         self.ui = Ui_SyslogWindow()
         self.ui.setupUi(self)
         self.LSignal = HlSignal()
         self.text = 'syslog'
         self.LSignal.print_syslog.connect(
             lambda: self.update_sysylog(self.text[22:-1].replace("\\n\\x00", "").replace(" : ", ":")))
+        # 创建线程
+        thread = Thread(target=self.child_thread, args=[self.s, ])
+        # 设置成守护线程
+        thread.setDaemon(True)
+        # 启动线程
+        thread.start()
         self.ui.syslog_btn_copy.clicked.connect(self.f_btn_copy_all)
         self.ui.syslog_btn_save.clicked.connect(self.f_btn_save_log)
-        self.ui.syslog_btn_open_in_txt.clicked.connect(lambda: self.f_btn_open_in_notepad(bytes(self.ui.syslog_text.document().toPlainText(),encoding = 'utf-8')))
+        self.ui.syslog_btn_open_in_txt.clicked.connect(lambda: self.f_btn_open_in_notepad())
+        from PySide2.QtGui import QIcon
+        self.setWindowIcon(QIcon("htek.ico"))
 
     def f_btn_copy_all(self):
         print('copy all syslog')
