@@ -134,6 +134,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tag.calllogwindiw = CallLogWindow(device)
         tag.calllogwindiw.show()
 
+    def f_btn_show_ntp_server(self, tag):
+        """打开ntp server界面"""
+        pass
+
     def f_btn_inport_rom(self, tag):
         from os.path import abspath
         rom_abspath = QFileDialog.getOpenFileName(self, '打开导入的rom', abspath('.'), '.rom(*.rom)')

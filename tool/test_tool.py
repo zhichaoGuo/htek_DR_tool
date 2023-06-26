@@ -167,7 +167,7 @@ def save_xml_cfg(window, device):
 
 
 def open_web(device):
-    url = "http://%s/" % device.ip
+    url = "http://%s:%s@%s/" % (device.user, device.password, device.ip)
     try:
         open_page(url)
         return True

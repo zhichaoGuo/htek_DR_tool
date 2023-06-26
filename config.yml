@@ -3,7 +3,7 @@ abyss_server:
 abyss_upgrade_url:
 - http://10.3.3.49/fw/abyss/daily_na/
 download_daily_rom_url:
-- http://repo.htek.com:8810/job/elpis_dev_new/147/artifact/out/roms/neutral/
+- http://repo.htek.com:8810/job/elpis_dev_new/578/artifact/out/roms/neutral/
 download_output_url:
 - http://abyss-dl.htek.com/.task/635a966e-bf8f-11ec-8995-000c29ffac12/output/
 import_cfg_path:

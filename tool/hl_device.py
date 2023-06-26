@@ -36,10 +36,15 @@ class VoipDevice:
         return text
 
     def _getVersion(self,text):
-        re_1 = 'ROM--'
-        re_2 = '\('
-        text = text[re.search(re_1, text, re.U).span()[1]:]
-        text = text[:re.search(re_2, text, re.U).span()[0]]
+        try:
+            re_1 = 'ROM--'
+            re_2 = '\('
+            text = text[re.search(re_1, text, re.U).span()[1]:]
+            text = text[:re.search(re_2, text, re.U).span()[0]]
+        except AttributeError as err:
+            # android document.write(jscs.firmware_version);</script></td>\r\n<td width="280">5.23.5.21.183(Sun May 21 14:38:51 UTC 2023 - 1)
+            re_ptl = 'document.write(jscs.firmware_version);</script></td>\r\n'
+            text = text.split(re_ptl)[1].split('<td></td>')[0].strip().split('>')[1].split('<')[0].split('(')[0]
         return text
 
     def _getRom(self):
